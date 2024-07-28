@@ -4,7 +4,7 @@ layout: post
 title: VL Sendai (Machine medium) 
 date: 29-07-2024
 categories: [documentation]
-tag: [Vulnlab, Machine, Active Directory, ADCS, ESC4]  
+tag: [Vulnlab, Machine, Active Directory, ADCS, ESC4, Silver Ticket]  
 author: Ethicxz
 ---
 # Before Starting
