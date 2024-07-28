@@ -1,11 +1,11 @@
 ---
 
 layout: post
-title: Rootkit, Hackropole CTF 
+title: Hello Rootkit, Hackropole CTF 
 date: 27-07-2024
 categories: [documentation]
 tag: [CTF, pwn, kernel]  
-
+author: Zélétix
 ---
 
 # Rootkit Deep analyze
