@@ -547,4 +547,4 @@ Now just do a winrm
 
 ![alt text](../assets/image_klendathu/12er.png)
 
-If you have any questions or any comments on this post, you can dm me on discord : "ethicxz." or on instagram : "eliott.la"
+If you have any questions or any comments on this post, you can dm me on discord : "ethicxz." or on [instagram](https://www.instagram.com/eliott.la/)
