@@ -3,7 +3,7 @@ layout: post
 title: VL Klendathu (Chain Insane)
 date: 2024-07-30
 categories: [documentation]
-tags: [Vulnlab, Chain, Active Directory, MSSQL, Silver Ticket, Relay Attack]
+tags: [Vulnlab, Chain, Active Directory, MSSQL, Silver Ticket, Relay Attack, DPAPI, Ntdissector]
 author: Ethicxz
 ---
 # Before Starting 
