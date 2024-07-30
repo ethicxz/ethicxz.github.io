@@ -253,4 +253,4 @@ We have the FLAG!!
 
 I hope you enjoyed this first Writeup see you soon!!
 
-if you have any questions you can dm me on discord : [zeletix.]()
+if you have any questions you can dm me on discord : 'zeletix.'
