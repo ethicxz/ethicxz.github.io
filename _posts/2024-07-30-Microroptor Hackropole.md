@@ -10,7 +10,7 @@ author: Zélétix
 
 ## Enumerate binary
 
-starting the challenge, we can already guess that the objective will likely involve `ROP`, given the binary's name and the challenge title `microROPtor`
+Starting the challenge, we can already guess that the objective will likely involve `ROP`, given the binary's name and the challenge title `microROPtor`
 
 When launching the vulnerable binary, we can see that it leaks an address:
 

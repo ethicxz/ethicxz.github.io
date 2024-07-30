@@ -252,3 +252,5 @@ ECSC{c0d801fb2045ddb0ab[...]fa30b45b8a5}
 We have the FLAG!!
 
 I hope you enjoyed this first Writeup see you soon!!
+
+if you have any questions you can dm me on discord : [zeletix.]()
