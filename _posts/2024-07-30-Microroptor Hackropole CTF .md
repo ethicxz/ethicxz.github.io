@@ -3,7 +3,7 @@
 layout: post
 title: Microroptor, Hackropole CTF 
 date: 30-07-2024
-categories: [documentation]
+categories: [CTF, Challenge]
 tag: [CTF, pwn, ROP, FCSC]  
 author: Zélétix
 ---

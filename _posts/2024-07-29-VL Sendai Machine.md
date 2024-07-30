@@ -2,7 +2,7 @@
 layout: post
 title: VL Sendai (Machine medium)
 date: 2024-07-29
-categories: [documentation]
+categories: [Vulnlab, Machine]
 tags: [Vulnlab, Machine, Active Directory, ADCS, ESC4, Silver Ticket]
 author: Ethicxz
 ---
@@ -370,4 +370,4 @@ Some links here : [https://medium.com/@iamkumarraj/godpotato-empowering-windows-
 
 [https://jlajara.gitlab.io/Potatoes_Windows_Privesc](https://jlajara.gitlab.io/Potatoes_Windows_Privesc)
 
-If you have any questions you can dm me on discord : 'ethicxz.' or on instagram : 'eliott.la'
+If you have any questions you can dm me on discord : 'ethicxz.' or on [instagram](https://www.instagram.com/eliott.la/)

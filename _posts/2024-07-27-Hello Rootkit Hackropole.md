@@ -3,7 +3,7 @@
 layout: post
 title: Hello Rootkit, Hackropole CTF 
 date: 27-07-2024
-categories: [documentation]
+categories: [CTF, Challenge]
 tag: [CTF, pwn, kernel]  
 author: Zélétix
 ---
