@@ -5,6 +5,8 @@ date: 2024-07-30
 categories: [Vulnlab, Chain]
 tags: [Vulnlab, Chain, Active Directory, MSSQL, Silver Ticket, Relay Attack, DPAPI, Ntdissector]
 author: Ethicxz
+image: assets/image_start/klendathu_slide.png
+
 ---
 # Before Starting 
 ```console

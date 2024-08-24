@@ -6,6 +6,8 @@ date: 28-07-2024
 categories: [Vulnlab, Chain]
 tag: [Vulnlab, Chain, Active Directory, RBCD, Linux AD, Through Proxy]
 author: Ethicxz
+image: assets/image_start/heron_slide.png
+
 ---
 # Before Starting
 ```console

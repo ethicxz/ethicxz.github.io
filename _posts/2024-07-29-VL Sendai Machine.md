@@ -5,6 +5,8 @@ date: 2024-07-29
 categories: [Vulnlab, Machine]
 tags: [Vulnlab, Machine, Active Directory, ADCS, ESC4, Silver Ticket]
 author: Ethicxz
+image: assets/image_start/sendai_slide.png
+
 ---
 # Before Starting
 ```console
