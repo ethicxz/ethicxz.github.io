@@ -6,6 +6,7 @@ categories: [Vulnlab, Chain]
 tags: [Vulnlab, Chain, Active Directory, Responder, Tcb Privilege, Relay Attack, Sliver, AMSI Bypass, Ntlmrelayx, WEBDAV, Coerce]
 author: Ethicxz
 image: assets/image_start/sidecar_slide.png
+description: VL Chain Sidecar
 ---
 
 # Before Starting 

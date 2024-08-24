@@ -6,7 +6,7 @@ categories: [Vulnlab, Chain]
 tags: [Vulnlab, Chain, Active Directory, MSSQL, Silver Ticket, Relay Attack, DPAPI, Ntdissector]
 author: Ethicxz
 image: assets/image_start/klendathu_slide.png
-
+description: VL Chain Klendathu
 ---
 # Before Starting 
 ```console
