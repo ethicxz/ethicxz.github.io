@@ -6,6 +6,8 @@ date: 27-07-2024
 categories: [CTF, Challenge]
 tag: [CTF, pwn, kernel]  
 author: Zélétix
+image: assets/image_start/hello_rootkit.png
+description: Hello Rootkit, Hackropole CTF 
 ---
 
 # Rootkit Deep analyze

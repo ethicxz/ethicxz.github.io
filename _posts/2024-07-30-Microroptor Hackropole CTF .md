@@ -6,6 +6,8 @@ date: 30-07-2024
 categories: [CTF, Challenge]
 tag: [CTF, pwn, ROP, FCSC]  
 author: Zélétix
+image: assets/image_start/microroptor.png
+description: Microroptor, Hackropole CTF
 ---
 
 ## Enumerate binary
