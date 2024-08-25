@@ -3,7 +3,7 @@ layout: post
 title: VL Sendai (Machine medium)
 date: 2024-07-29
 categories: [Vulnlab, Machine]
-tags: [Vulnlab, Machine, Active Directory, ADCS, ESC4, Silver Ticket]
+tags: [Vulnlab, Machine, Active Directory, ADCS, ESC4, Silver Ticket, SeImpersonate Privilege]
 author: Ethicxz
 image: assets/image_start/sendai_slide.png
 description: VL Machine Sendai by Ethicxz
