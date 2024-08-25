@@ -7,7 +7,7 @@ categories: [Vulnlab, Chain]
 tag: [Vulnlab, Chain, Active Directory, RBCD, Linux AD, Through Proxy]
 author: Ethicxz
 image: assets/image_start/heron_slide.png
-description: VL Chain Heron
+description: VL Chain Heron by Ethicxz
 ---
 # Before Starting
 ```console

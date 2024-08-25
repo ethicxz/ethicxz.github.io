@@ -7,7 +7,7 @@ categories: [CTF, Challenge]
 tag: [CTF, pwn, ROP, FCSC]  
 author: Zélétix
 image: assets/image_start/microroptor.png
-description: Microroptor, Hackropole CTF
+description: Microroptor, Hackropole CTF by Zeletix
 ---
 
 ## Enumerate binary

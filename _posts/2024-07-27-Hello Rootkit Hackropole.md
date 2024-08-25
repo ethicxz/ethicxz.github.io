@@ -7,7 +7,7 @@ categories: [CTF, Challenge]
 tag: [CTF, pwn, kernel]  
 author: Zélétix
 image: assets/image_start/hello_rootkit.png
-description: Hello Rootkit, Hackropole CTF 
+description: Hello Rootkit, Hackropole CTF by Zeletix
 ---
 
 # Rootkit Deep analyze
