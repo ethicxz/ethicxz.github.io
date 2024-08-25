@@ -336,7 +336,7 @@ Task.ps1 NT AUTHORITY\SYSTEM:(I)(F)
 
 Successfully processed 1 files; Failed processing 0 files
 ```
-So we can just replace this task by a revshell that gonna be execute as T0_c.fowler but i'm gonna use another way to become DA of this machine.
+So we can just replace this task by a revshell that gonna be execute as T0_c.fowler but i'm gonna use another way to become DA of this chain.
 
 ```bash
 sliver (sidecar-http) > sharpdpapi machinetriage
