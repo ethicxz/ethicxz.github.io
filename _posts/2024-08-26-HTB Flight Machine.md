@@ -17,7 +17,7 @@ Target > 10.10.11.187
 ```bash
 53/tcp    open  domain        syn-ack Simple DNS Plus
 80/tcp    open  http          syn-ack Apache httpd 2.4.52 ((Win64) OpenSSL/1.1.1m PHP/8.1.1)
-|_http-server-header: Apache/2.4.52 (Win64) OpenSSL/1.1.1m PHP/8.1.1
+|_http-server-header: Apache/2.4.52 (Win64) OpenSSL/1.1.1 PHP/8.1.1
 |_http-title: g0 Aviation
 | http-methods:
 |   Supported Methods: GET POST OPTIONS HEAD TRACE
