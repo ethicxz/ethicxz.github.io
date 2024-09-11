@@ -14,7 +14,7 @@ timezone:
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: ZETHICXZ # the main title
+title: ETHICXZ # the main title
 
 tagline: A blog for CTF, cybersecurity and more ! # it will display as the sub-title
 
@@ -23,7 +23,7 @@ description: >- # used by seo meta and the atom feed
 
 # Fill in the protocol & hostname for your site.
 # e.g. 'https://username.github.io', note that it does not end with a '/'.
-url: "https://zethicxz.github.io"
+url: "https://ethicxz.github.io"
 
 github:
   username: zethicxz # change to your github username
@@ -34,7 +34,7 @@ twitter:
 social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
-  name: Zélétix & Ethicxz
+  name: Ethicxz
   email: example@domain.com # change to your email address
   links:
     # The first element serves as the copyright owner's link
