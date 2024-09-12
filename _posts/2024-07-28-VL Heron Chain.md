@@ -68,7 +68,7 @@ start vulscan
 [*]10.10.173.53
    [->]mucdc
    [->]10.10.173.53
-[*] OsInfo 10.10.173.53 (Windows Server 2054 Standard 20348)
+[*] OsInfo 10.10.173.53 (Windows Server 2054 Standard 20348).
 ```
 Now we can forward :
 
