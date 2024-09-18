@@ -35,6 +35,8 @@ Not shown: 999 filtered ports
 PORT     STATE SERVICE
 3389/tcp open  ms-wbt-server
 ```
+# FTP
+
 ```bash
 ftp 10.10.200.182
 # use ftp as user without password for login
@@ -97,6 +99,8 @@ There is also a file 'users.xml' with this :
         </user>
 </filezilla>
 ```
+# Crack some passwords
+
 I asked some questions about this file to ChatGPT and he said me that the hash.txt should be like that : ```<hash>:<salt>:<iterations>```, he also said to me that the algorithm may be ```PBKDF2-HMAC-SHA256```, let's do some research with theses informations
 
 [This link](https://forum.filezilla-project.org/viewtopic.php?t=58615#p189564) can confirm to us that is ```PBKDF2-HMAC-SHA256```
@@ -202,6 +206,8 @@ hashcat -m 10900 -a 0 hash2.txt wordlist.txt -r OneRuleToRuleThemStill/OneRuleTo
 ```
 ![alt text](<../assets/image_kaiju/3er 2e cracked pass.png>)
 
+# FileZilla
+
 Ok now we can try to forward port 14148 to access to the ```Administration Server``` of FileZilla
 
 ```bash
@@ -218,6 +224,8 @@ Then we can login as sasrv200 :
 ```bash
 ssh -i id_rsa sasrv200@10.10.200.182
 ```
+# Exploit KeePass
+
 Now, if we return on ```E:\Public``` we can see a file ```it.kdbx```, download him
 
 ![alt text](<../assets/image_kaiju/5er keepass error because pass.png>)
@@ -266,6 +274,9 @@ proxychains -q nxc ldap 10.10.200.181 -u 'clare.frost' -p 'REDACTED'
 SMB         10.10.200.181   445    BERSRV100        [*] Windows Server 2022 Build 20348 x64 (name:BERSRV100) (domain:kaiju.vl) (signing:True) (SMBv1:False)
 LDAP        10.10.200.181   389    BERSRV100        [+] kaiju.vl\clare.frost:REDACTED
 ```
+
+# StreamDivert + ESC8
+
 Now if we do some ADCS enumeration like this 
 
 ```bash

