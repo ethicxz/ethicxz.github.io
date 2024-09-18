@@ -2,8 +2,8 @@
 layout: post
 title: VL Intercept (Chain Hard)
 date: 2024-09-18
-categories: [Vulnlab, Machine]
-tags: [Vulnlab, Machine, Active Directory, ADCS, ESC7, RBCD, Relay Attack]
+categories: [Vulnlab, Chain]
+tags: [Vulnlab, Chain, Active Directory, ADCS, ESC7, RBCD, Relay Attack]
 author: Ethicxz
 image: assets/image_start/intercept_slide.png
 description: VL Chain Intercept by Ethicxz
