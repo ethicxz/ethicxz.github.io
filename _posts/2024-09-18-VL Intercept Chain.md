@@ -175,6 +175,9 @@ MAQ         10.10.152.69    389    DC01             MachineAccountQuota: 10
 netexec ldap 10.10.152.69 -u 'KATHRYN.SPENCER' -p 'REDACTED' -M ldap-checker
 SMB         10.10.152.69    445    DC01             [*] Windows Server 2022 Build 20348 x64 (name:DC01) (domain:intercept.vl) (signing:True) (SMBv1:False)
 LDAP        10.10.152.69    389    DC01             [+] intercept.vl\KATHRYN.SPENCER:REDACTED
+LDAP-CHE... 10.10.152.69  389    DC01             LDAP Signing NOT Enforced!
+LDAP-CHE... 10.10.152.69  389    DC01             LDAPS Channel Binding is set to "NEVER"
+```
 So using WEBDAV Coercion, which use HTTP so NTLM authentication, we can relay authentication to the DC.
 
 Thanks to this we can perform a RBCD attack

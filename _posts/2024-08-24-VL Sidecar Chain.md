@@ -3,7 +3,7 @@ layout: post
 title: VL Sidecar (Chain Hard)
 date: 2024-08-24
 categories: [Vulnlab, Chain]
-tags: [Vulnlab, Chain, Active Directory, Responder, Tcb Privilege, Relay Attack, Sliver, AMSI Bypass, Ntlmrelayx, WEBDAV, Coerce]
+tags: [Vulnlab, Chain, Active Directory, Responder, Tcb Privilege, Relay Attack, Sliver, AMSI Bypass, Ntlmrelayx, WEBDAV, Coerce, ShadowCreds]
 author: Ethicxz
 image: assets/image_start/sidecar_slide.png
 description: VL Chain Sidecar by Ethicxz
