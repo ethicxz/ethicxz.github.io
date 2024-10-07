@@ -72,7 +72,7 @@ start vulscan
 ```
 Now we can forward :
 
-[https://github.com/nicocha30/ligolo-ng](https://github.com/nicocha30/ligolo-ng) (i used ligolo)
+[https://github.com/nicocha30/ligolo-ng](https://github.com/nicocha30/ligolo-ng) (I used ligolo)
 
 ```bash
 # local machine 
