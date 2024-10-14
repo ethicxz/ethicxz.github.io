@@ -173,19 +173,10 @@ name = "apache2"
 ```
 Templates :
 
-```php
-// "/etc/remco/templates/010-customers.conf.tmpl"
-{% for customer in lsdir("/customers") %}
-  {% if exists(printf("/customers/%s/url", customer)) %}
+"/etc/remco/templates/010-customers.conf.tmpl"
 
-<VirtualHost *:80>
-	ServerName {{ getv(printf("/customers/%s/url",customer)) }}.ten.vl
-	DocumentRoot /srv/{{ customer }}/
-</VirtualHost>
+![alt text](../assets/image_ten/customer.conf.tmpl.png)
 
-  {% endif %}
-{% endfor %}
-```
 And now the ```010-customers.conf``` file to better understand :
 
 ```php
