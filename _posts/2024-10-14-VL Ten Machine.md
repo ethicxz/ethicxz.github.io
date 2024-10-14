@@ -173,8 +173,8 @@ name = "apache2"
 ```
 Templates :
 
-```bash
-# "/etc/remco/templates/010-customers.conf.tmpl"
+```php
+// "/etc/remco/templates/010-customers.conf.tmpl"
 {% for customer in lsdir("/customers") %}
   {% if exists(printf("/customers/%s/url", customer)) %}
 
