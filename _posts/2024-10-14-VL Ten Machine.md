@@ -173,7 +173,7 @@ name = "apache2"
 ```
 Templates :
 
-```php
+```console
 // "/etc/remco/templates/010-customers.conf.tmpl"
 {% for customer in lsdir("/customers") %}
   {% if exists(printf("/customers/%s/url", customer)) %}
