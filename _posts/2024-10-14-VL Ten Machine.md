@@ -31,9 +31,9 @@ We can't login on the ftp as anonymous but on the website we can request some cr
 
 With that we can login on the ftp with ```ten-b94344ef;f846b300``` but there is nothing in our directory so this is not very interesting for the moment.
 
-After some enumerations we can find a subdomain with ```wfuzz``` 
+After some enumerations we can find a subdomain with ```wfuzz```
 
-```webdb.ten.vl```
+The subdomain is : ```webdb.ten.vl```
 
 Using the guest credentials we can login as ```user;pa55word```, after some research we can see that :
 
@@ -113,7 +113,7 @@ Ok nice now let's root the machine.
 
 ## Use a config file to be root
 
-If we look how the website ```ten.vl``` work using pspy, we can see that :
+If we look how the website ```ten.vl``` work when we "create a ftp account", using pspy, we can see that :
 
 ![alt text](../assets/image_ten/8ER.png)
 
@@ -152,7 +152,6 @@ We can also analyse all the files in ```/etc/remco``` to understand how virtuals
 
 ```php
 // "/etc/remco/config"
-
 log_level = "info"
 log_format = "text"
 
@@ -172,6 +171,8 @@ name = "apache2"
       watch = true
       interval = 5
 ```
+Templates :
+
 ```php
 // "/etc/remco/templates/010-customers.conf.tmpl"
 {% for customer in lsdir("/customers") %}
@@ -248,6 +249,7 @@ tyrell@ten:/etc/apache2/sites-enabled$ cat 010-customers.conf | grep -I -C5 "tot
 So we be able to create a virtual host, now we need to find to use this to be root :
 
 [Check this](https://httpd.apache.org/docs/2.4/logs.html#piped)
+
 [And this](https://httpd.apache.org/docs/2.4/mod/core.html#errorlog)
 
 So we need to add an actual servername then newline, add the log thing and comment everything else
@@ -296,6 +298,6 @@ ssh -i id_rsa root@ten.vl
 ```
 With that, you can just overwrite everything you want like ```/etc/sudoers```, ```authorized_keys``` etc.
 
-Big thanks to [pr0m0ly](https://x.com/pr0m0ly) to the help he gave to me to root the machine 
+PS : Big thanks to [pr0m0ly](https://x.com/pr0m0ly) to the help he gave to me to root the machine 
 
 sorry if my english was bad and if you have any questions or comments on this write up you can dm me on [instagram](https://instagram.com/eliott.la) or on discord : 'ethicxz.'
