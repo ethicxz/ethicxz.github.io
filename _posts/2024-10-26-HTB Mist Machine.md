@@ -58,7 +58,7 @@ Now just wait....
 
 Nice we are Brandon.Keywarp
 
-## Coerce MS01$ thanks to a WebDav Server to perform a ShadowCreds attack
+## Setup a WebDav Server to perform a ShadowCreds attack
 
 Ok so at this point of the box, i'm not going to detail all the research i did and everything i tried otherwise this post will be way too long so i'll get straight to the point :
 
