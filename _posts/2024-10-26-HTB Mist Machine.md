@@ -1,7 +1,7 @@
 ---
 layout: post
 title: HTB Mist (Machine Insane)
-date: 2024-09-28
+date: 2024-10-26
 categories: [HTB, Box]
 tags: [HTB, Machine, Pluck CMS, Relay Attack, ADCS, Webdav, Coerce Authentication, ShadowCreds, ESC13, KeePass]
 author: Ethicxz
