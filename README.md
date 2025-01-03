@@ -1,1 +1,1 @@
-I dont know what so say a part the thing that i'm only 17 years old so i can say stupid things sometimes and i'm absolutely not an expert but i'm trying my best ! [My instagram if u have other question](https://instagram.com/eliott.la) or add me on discord : 'ethicxz.'
+I dont know what to say except the thing that i'm only 17 years old so i can say stupid things sometimes and i'm absolutely not an expert but i'm trying my best ! [My instagram if u have other question](https://instagram.com/eliott.la) or add me on discord : 'ethicxz.'
