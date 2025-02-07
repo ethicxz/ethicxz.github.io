@@ -372,4 +372,4 @@ Some links here : [https://medium.com/@iamkumarraj/godpotato-empowering-windows-
 
 [https://jlajara.gitlab.io/Potatoes_Windows_Privesc](https://jlajara.gitlab.io/Potatoes_Windows_Privesc)
 
-If you have any questions you can dm me on discord : 'ethicxz.' or on [instagram](https://www.instagram.com/eliott.la/)
+If you have any questions you can dm me on discord : 'ethicxz.'

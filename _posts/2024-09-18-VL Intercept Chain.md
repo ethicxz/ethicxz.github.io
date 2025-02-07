@@ -375,4 +375,4 @@ LDAP        10.10.152.69    389    DC01             [+] intercept.vl\Administrat
 ```
 ![alt text](../assets/image_intercept/6er.png)
 
-Nice ! sorry if my english was bad and if you have any questions or comments on this write up you can dm me on [instagram](https://instagram.com/eliott.la) or on discord : 'ethicxz.'
+Nice ! sorry if my english was bad and if you have any questions you can dm me on discord : 'ethicxz.'

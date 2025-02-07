@@ -393,7 +393,7 @@ proxychains -q evil-winrm -r TENGU.VL -i dc.tengu.vl
 ```
 T0_c.fowler is a member of "Domain Admins" group so we can go in ```C:\Users\Administrator\Desktop```
 
-If you have any questions you can dm me on [instagram](https://instagram.com/eliott.la) or on discord at : 'ethicxz.'
+If you have any questions you can dm me on discord : 'ethicxz.'
 
 
 

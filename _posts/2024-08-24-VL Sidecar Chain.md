@@ -462,5 +462,5 @@ Mode                 LastWriteTime         Length Name
 ```
 Nice !!
 
-If you have any comments on this write up or any questions you can dm me on [instagram](https://instagram.com/eliott.la) or on discord : 'ethicxz.'
+If you have any questions you can dm me on discord : 'ethicxz.'
 

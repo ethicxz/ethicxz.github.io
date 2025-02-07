@@ -291,4 +291,4 @@ With that, you can just overwrite everything you want like ```/etc/sudoers```, `
 
 PS : Big thanks to [pr0m0ly](https://x.com/pr0m0ly) to the help he gave to me to root the machine 
 
-sorry if my english was bad and if you have any questions or comments on this write up you can dm me on [instagram](https://instagram.com/eliott.la) or on discord : 'ethicxz.'
+sorry if my english was bad and if you have any questions you can dm me on discord : 'ethicxz.'

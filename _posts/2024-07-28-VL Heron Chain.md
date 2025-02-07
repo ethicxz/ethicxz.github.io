@@ -394,7 +394,7 @@ SMB         10.10.173.53    445    MUCDC            [*] Windows Server 2022 Stan
 SMB         10.10.173.53    445    MUCDC            [+] heron.vl\_admin:399[...]938
 ```
 
-AND WE ARE ROOT !!, if you have any questions you can dm me on discord : 'ethicxz.' or on [instagram](https://www.instagram.com/eliott.la/)
+AND WE ARE ROOT !!, if you have any questions you can dm me on discord : 'ethicxz.'
 
 ## Other way to privesc RBCD with a machine
 

