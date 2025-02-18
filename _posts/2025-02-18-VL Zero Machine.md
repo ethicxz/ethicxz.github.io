@@ -61,7 +61,7 @@ We basically don't care about ```index.html``` but ```.htaccess``` is an interes
 
 I tried many things with [this tool](https://github.com/wireghoul/htshells) but nothing worked.
 
-I then remembered the ```Ten``` machine made by [Jkr](http://x.com/ateamjkr) (knowing that Zero was also made by jkr) and so I went to look at the Apache docs to find how I could make this ```.htaccess``` file interesting
+I then remembered the ```Ten``` machine made by [Jkr](https://x.com/ateamjkr) (knowing that Zero was also made by jkr) and so I went to look at the Apache docs to find how I could make this ```.htaccess``` file interesting
 
 First, I found this https://httpd.apache.org/docs/2.4/custom-error.html
 
