@@ -1,7 +1,7 @@
 ---
 
 layout: post
-title: VL Control (Chain hard 
+title: VL Control (Chain hard)
 date: 19-12-2024
 categories: [Vulnlab, Chain]
 tag: [Vulnlab, Chain, Osctrl, Pydio Cells, Linux]
