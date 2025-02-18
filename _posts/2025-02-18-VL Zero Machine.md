@@ -57,7 +57,7 @@ drwxr-xr-x    3 root     root         4096 Feb 18 19:27 ..
 ```
 We basically don't care about ```index.html``` but ```.htaccess``` is an interesting file
 
-## Replace .HTACCESS to read a file
+## Replace/Create .HTACCESS to read a file
 
 I tried many things with [this tool](https://github.com/wireghoul/htshells) but nothing worked.
 
@@ -67,7 +67,7 @@ First, I found this https://httpd.apache.org/docs/2.4/custom-error.html
 
 It doesn't seem very useful at first but let's keep this doc in mind
 
-I then did some research on how to make a ```.htaccess file``` "malicious" and I found this doc : https://blog.sucuri.net/2024/03/what-is-htaccess-malware-detection-symptoms-prevention.html
+I then did some research on how to make a ```.htaccess file``` "malicious" and I found this doc : [https://blog.sucuri.net/2024/03/what-is-htaccess-malware-detection-symptoms-prevention.html](https://blog.sucuri.net/2024/03/what-is-htaccess-malware-detection-symptoms-prevention.html)
 
 Using this payload :
 
@@ -87,7 +87,7 @@ Knowing that i create the .htaccess file on my attacking machine with root right
 
 But i couldn't get anything conclusive from it, so i tried reading files on the target machine instead
 
-Back to the apache doc https://httpd.apache.org/docs/current/expr.html#functions
+Back to the apache doc [https://httpd.apache.org/docs/current/expr.html#functions](https://httpd.apache.org/docs/current/expr.html#functions)
 
 ```file Read contents from a file (including line endings, when present) ```
 
@@ -113,6 +113,8 @@ Now login with ssh
 
 ## Unintended ROOT (quick win)
 After some enumerations i found a quick win (dirtypipe)
+
+[https://github.com/AlexisAhmed/CVE-2022-0847-DirtyPipe-Exploits](https://github.com/AlexisAhmed/CVE-2022-0847-DirtyPipe-Exploits)
 
 ```bash
 zroadmin@ip-10-10-10-13:/tmp$ ./exploit-2 /usr/bin/sudo
