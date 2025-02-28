@@ -29,7 +29,7 @@ github:
   username: ethicxz # change to your github username
 
 twitter:
-  username: Zeletixx # change to your twitter username
+  username: ethicxz # change to your twitter username
 
 social:
   # Change to your full name.
@@ -38,8 +38,8 @@ social:
   email: example@domain.com # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    #- https://twitter.com/username # change to your twitter homepage
-    - https://www.instagram.com/eliott.la/ # change to your github homepage
+    - https://x.com/ethicxz # change to your twitter homepage
+    #- https://www.instagram.com/aa/ # change to your github homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
     # - https://www.linkedin.com/in/username
@@ -96,7 +96,7 @@ theme_mode: # [light | dark]
 cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar: https://pbs.twimg.com/profile_images/1505133970203238400/3My7sRPs_400x400.jpg
+avatar: https://i.pinimg.com/736x/a7/b3/63/a7b363a932e7ac8f6d134476e8b6caad.jpg
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
