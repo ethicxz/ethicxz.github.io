@@ -35,7 +35,7 @@ Not shown: 999 filtered ports
 PORT     STATE SERVICE
 3389/tcp open  ms-wbt-server
 ```
-# FTP
+## FTP
 
 ```bash
 ftp 10.10.200.182
@@ -99,7 +99,7 @@ There is also a file 'users.xml' with this :
         </user>
 </filezilla>
 ```
-# Crack some passwords
+## Crack some passwords
 
 I asked some questions about this file to ChatGPT and he said me that the hash.txt should be like that : ```<hash>:<salt>:<iterations>```, he also said to me that the algorithm may be ```PBKDF2-HMAC-SHA256```, let's do some research with theses informations
 
@@ -206,7 +206,7 @@ hashcat -m 10900 -a 0 hash2.txt wordlist.txt -r OneRuleToRuleThemStill/OneRuleTo
 ```
 ![alt text](<../assets/image_kaiju/3er 2e cracked pass.png>)
 
-# FileZilla
+## FileZilla
 
 Ok now we can try to forward port 14148 to access to the ```Administration Server``` of FileZilla
 
@@ -224,7 +224,7 @@ Then we can login as sasrv200 :
 ```bash
 ssh -i id_rsa sasrv200@10.10.200.182
 ```
-# Exploit KeePass
+## Exploit KeePass
 
 Now, if we return on ```E:\Public``` we can see a file ```it.kdbx```, download him
 
@@ -275,7 +275,7 @@ SMB         10.10.200.181   445    BERSRV100        [*] Windows Server 2022 Buil
 LDAP        10.10.200.181   389    BERSRV100        [+] kaiju.vl\clare.frost:REDACTED
 ```
 
-# StreamDivert + ESC8
+## StreamDivert + ESC8
 
 Now if we do some ADCS enumeration like this 
 

@@ -114,7 +114,7 @@ SMB         10.10.173.53    445    MUCDC            [-] heron.vl\toto: STATUS_LO
 ```
 There is no Guest Session so we need to find creds
 
-## First user, samuel.davies
+### First user, samuel.davies
 
 Let's try ASREProast : [https://tools.thehacker.recipes/impacket/examples/getnpusers.py](https://tools.thehacker.recipes/impacket/examples/getnpusers.py)
 
@@ -159,7 +159,7 @@ SMB         10.10.173.53    445    MUCDC            NETLOGON        READ        
 SMB         10.10.173.53    445    MUCDC            SYSVOL          READ            Logon server share
 SMB         10.10.173.53    445    MUCDC            transfer$       READ,WRITE
 ```
-## Getting a shell on the windows machine
+### Getting a shell on the windows machine
 
 We can read in SYSVOL and we saw that there were service accounts (svc_web)
 
