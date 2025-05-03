@@ -1,7 +1,7 @@
 ---
 layout: post
 title: HTB BigBang (Machine Hard)
-date: 2025-01-27
+date: 2025-05-03
 categories: [HTB, Box]
 tags: [HTB, Machine, BOF, LFI, Grafana, APK]
 author: Ethicxz
