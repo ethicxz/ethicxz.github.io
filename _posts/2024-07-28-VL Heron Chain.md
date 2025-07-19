@@ -12,7 +12,7 @@ description: VL Chain Heron by Ethicxz
 # Before Starting
 ```console
 Me > 10.8.2.163
-Target > 10.10.173.53 ; 10.10.173.54
+Target > 10.10.173.53 ; 10.10.173.54 
 ```
 ## Enumeration
 
