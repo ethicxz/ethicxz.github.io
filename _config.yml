@@ -39,7 +39,7 @@ social:
   links:
     # The first element serves as the copyright owner's link
     - https://x.com/ethicxz # change to your twitter homepage
-    #- https://www.instagram.com/aa/ # change to your github homepage
+    - https://app.hackthebox.com/profile/1704836
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
     # - https://www.linkedin.com/in/username
@@ -96,7 +96,7 @@ theme_mode: # [light | dark]
 cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar: https://i.pinimg.com/736x/a7/b3/63/a7b363a932e7ac8f6d134476e8b6caad.jpg
+avatar: https://preview.redd.it/n-was-a-wasted-character-in-the-anime-i-really-wish-they-v0-kw522mg60ife1.jpeg?auto=webp&s=085e486006ce07936a629e4d4a24e139ef169d54
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
