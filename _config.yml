@@ -35,11 +35,10 @@ social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
   name: Ethicxz
-  email:  # change to your email address
+  email: https://www.linkedin.com/in/eliott-laurie-b910b92ab
   links:
     # The first element serves as the copyright owner's link
-    - https://x.com/ethicxz # change to your twitter homepage
-    # Uncomment below to add more social links
+    - https://x.com/ethicxz 
     - https://app.hackthebox.com/profile/1704836
     - https://www.linkedin.com/in/eliott-laurie-b910b92ab
 
